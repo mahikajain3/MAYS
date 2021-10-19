@@ -15,4 +15,4 @@ class EndpointTestCase(TestCase):
 		hello = ep.HelloWorld(Resource)
 		ret = hello.get()
 		self.assertIsInstance(ret, dict)
-		self.assertIn(ep.HELLO, rect)
+		self.assertIn(ep.HELLO, ret)

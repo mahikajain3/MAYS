@@ -6,13 +6,14 @@ The endpoint called `endpoints` will return all available endpoints.
 from http import HTTPStatus
 from flask import Flask
 from flask_restx import Resource, Api
-#import db.db as db
+# import db.db as db
 
 app = Flask(__name__)
 api = Api(app)
 
 HELLO = 'Hola'
 WORLD = 'mundo'
+
 
 @api.route('/hello')
 class HelloWorld(Resource):
@@ -42,7 +43,7 @@ class Endpoints(Resource):
         return {"Available endpoints": endpoints}
 
 
-@api.route('/pets')
+@api.route('/pets/<username>')
 class Pets(Resource):
     """
     This class supports fetching a list of all pets.
