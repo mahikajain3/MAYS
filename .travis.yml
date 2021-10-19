@@ -11,8 +11,3 @@ env:
 script:
     - make tests
 
-#after_success:
-#    - ./deploy.sh
-#
-#notifications:
-#  slack: devopsnyu:vAFcJBgAP2f73SqhWgb40Gjf
