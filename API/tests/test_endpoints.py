@@ -1,4 +1,5 @@
 from unittest import TestCase, skip
+from flask_restx import Resource, Api
 
 import API.endpoints as ep
 
@@ -10,5 +11,7 @@ class EndpointTestCase(TestCase):
 	def tearDown(self):
 		pass
 
-	def yest_hello(self):
-		self.assertTrue(False)
+	def test_hello(self):
+		hello = ep.HelloWorld(Resource)
+		ret = hello.get()
+		self.assertIsInstance(ret, dict)
