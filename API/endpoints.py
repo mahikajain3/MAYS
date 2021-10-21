@@ -29,6 +29,19 @@ class HelloWorld(Resource):
         return {HELLO: WORLD}
 
 
+@api.route('/list_rooms')
+class ListRoom(Resource):
+    """
+    This endpoint returns list of rooms.
+    """
+    def get(self):
+        """
+        Returns list of all chat rooms.
+        """
+        return {"Software Engineering": {"num_users": 17},
+                "AI": {"num_users": 27}, }
+
+
 @api.route('/endpoints')
 class Endpoints(Resource):
     """
