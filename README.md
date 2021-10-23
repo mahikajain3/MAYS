@@ -15,5 +15,8 @@ The MakerSpace offers a number of trainings and their Design Lab hosts a variety
 
 ## Design
 
-- Use flask-api as template.
-- 
+- Use flask_restx to build an API server
+- Handle each major requirement with an API endpoint
+- Use Test-Driven-Development (TDD) to make sure we have testing
+- Use Swagger for initial interaction with server
+- Use Swagger, pydoc and good docstrings for documentation
