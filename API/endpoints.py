@@ -41,7 +41,7 @@ class ListRoom(Resource):
         return {"Software Engineering": {"num_users": 17},
                 "AI": {"num_users": 27}, }
 
-    
+
 @api.route('/endpoints')
 class Endpoints(Resource):
     """
@@ -55,7 +55,7 @@ class Endpoints(Resource):
         endpoints = sorted(rule.rule for rule in api.app.url_map.iter_rules())
         return {"Available endpoints": endpoints}
 
-    
+
 @api.route('/pets/<username>')
 class Pets(Resource):
     """
