@@ -28,7 +28,7 @@ class HelloWorld(Resource):
         """
         return {HELLO: WORLD}
 
-"""
+
 @api.route('/list_rooms')
 class ListRoom(Resource):
     """
@@ -65,4 +65,3 @@ class Pets(Resource):
         This method returns all pets.
         """
         return username
-"""
