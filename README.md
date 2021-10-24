@@ -1,6 +1,7 @@
 # Project: MAYS
 ### SE Class Project
-The MakerSpace offers a number of trainings and their Design Lab hosts a variety of workshops. Students attend these trainings and workshops and can  work towards earning a 'badge'. For more information, check out https://makerspace.engineering.nyu.edu/digital-badges/.
+The MakerSpace offers a number of trainings and their Design Lab hosts a variety of workshops. Students attend these trainings and workshops and can work towards earning a 'badge'. Students could utilize this API server to keep track of badges earned, and view information about badges in progress.
+For more information, check out https://makerspace.engineering.nyu.edu/digital-badges/.
 
 ## Requirements
 
