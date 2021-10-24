@@ -4,13 +4,14 @@ The MakerSpace offers a number of trainings and their Design Lab hosts a variety
 
 ## Requirements
 
-- Student information (First name, Last name, netID, barcode)
-- List of badges
-- List of workshops associated with each badge
-- List of trainings associated with each badge
-- Number of trainings/workshops attendance required per badge
-- Record of what trainings student has completed
-- Record of what workshops student has completed
+- Create User
+- Store student information in a databse (First name, Last name, netID, barcode)
+- List badges
+- List workshops associated with each badge
+- List trainings associated with each badge
+- Get number of trainings/workshops attendance required per badge
+- Create record of what trainings student has completed
+- Create record of what workshops student has completed
 - Record and notify student when badge earned
 
 ## Design
