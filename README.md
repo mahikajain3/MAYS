@@ -6,7 +6,7 @@ For more information, check out https://makerspace.engineering.nyu.edu/digital-b
 ## Requirements
 
 - Create user
-- Store student information in a databse (First name, Last name, netID, barcode)
+- Store student information in a database (First name, Last name, netID, barcode)
 - List badges for users
 - List workshops and trainings associated with each badge
 - Get number of trainings/workshops attendance required per badge

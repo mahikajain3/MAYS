@@ -2,7 +2,7 @@ LINTER = flake8
 API_DIR = API
 DB_DIR = db
 REQ_DIR = .
-PYDOC = python -m pydoc -w
+PYDOC = python3 -m pydoc -w
 
 FORCE:
 
@@ -25,5 +25,5 @@ dev_env: FORCE
 	pip install -r $(REQ_DIR)/requirements-dev.txt
 
 docs: FORCE
-	$(PYDOC) $(API_DIR)/*.PY
-	$(PYDOC) $(DB_DIR)/*.PY
+	$(PYDOC) $(API_DIR)/*.py
+	$(PYDOC) $(DB_DIR)/*.py
