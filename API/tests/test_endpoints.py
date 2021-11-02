@@ -21,7 +21,7 @@ class EndpointTestCase(TestCase):
                 self.assertIsInstance(ret, dict)
                 self.assertIn(ep.HELLO, ret)
 
-	def test_list_rooms1(self):
+	def test_list_user1(self):
            """
            Post-condition 1: return is a dictionary.
            """
@@ -29,7 +29,7 @@ class EndpointTestCase(TestCase):
            ret = lr.get()
            self.assertIsInstance(ret, dict)
 
-	def test_list_rooms2(self):
+	def test_list_users2(self):
            """ 
            Post-condition 2: keys to the dict are strings
            """
@@ -38,11 +38,20 @@ class EndpointTestCase(TestCase):
            for key in ret:
                self.assertIsInstance(key, str)
 
-	def test_list_rooms3(self):
+	def test_list_users3(self):
            """ 
-           Post-condition 3: the values in the dict are themselves dicts
+           Post-condition 3: keys to the dict are strings
            """
            lr = ep.ListUsers(Resource)
            ret = lr.get()
-           for val in ret.values():
-               self.assertIsInstance(val,dict)
+           for key in ret:
+               self.assertIsInstance(key, str)
+	
+	def test_list_users4(self):
+           """ 
+           Post-condition 4: keys to the dict are strings
+           """
+           lr = ep.ListUsers(Resource)
+           ret = lr.get()
+           for key in ret:
+               self.assertIsInstance(key, str)
