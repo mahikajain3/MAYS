@@ -30,20 +30,20 @@ class HelloWorld(Resource):
         return {HELLO: WORLD}
 
 
-@api.route('/list_rooms')
-class ListRooms(Resource):
+@api.route('/list_users')
+class ListUsers(Resource):
     """
-    This endpoint returns list of rooms.
+    This endpoint return a list of all the users.
     """
     def get(self):
         """
-        Returns list of all chat rooms.
+        Returns list of all users.
         """
-        rooms = db.get_rooms()
-        if rooms is None:
+        users = db.get_users()
+        if users is None:
             pass
         else:
-            return rooms
+            return users
 
 
 @api.route('/endpoints')

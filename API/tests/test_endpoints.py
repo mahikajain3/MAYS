@@ -25,7 +25,7 @@ class EndpointTestCase(TestCase):
            """
            Post-condition 1: return is a dictionary.
            """
-           lr = ep.ListRooms(Resource)
+           lr = ep.ListUsers(Resource)
            ret = lr.get()
            self.assertIsInstance(ret, dict)
 
@@ -33,7 +33,7 @@ class EndpointTestCase(TestCase):
            """ 
            Post-condition 2: keys to the dict are strings
            """
-           lr = ep.ListRooms(Resource)
+           lr = ep.ListUsers(Resource)
            ret = lr.get()
            for key in ret:
                self.assertIsInstance(key, str)
@@ -42,7 +42,7 @@ class EndpointTestCase(TestCase):
            """ 
            Post-condition 3: the values in the dict are themselves dicts
            """
-           lr = ep.ListRooms(Resource)
+           lr = ep.ListUsers(Resource)
            ret = lr.get()
            for val in ret.values():
                self.assertIsInstance(val,dict)
