@@ -1,4 +1,4 @@
 {
-    "Software Engineering": {"num_users": 17},
-    "user1": {"first_name": "Mahika", "last_name": "Jain", "net_id": "mj2249"}
+    "user1": {"first_name": "Test", "last_name": "User", "net_id": "ab123"},
+    "user2": {"first_name": "Mahika", "last_name": "Jain", "net_id": "mj2249"}
 }
