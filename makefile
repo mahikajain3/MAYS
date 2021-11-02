@@ -3,6 +3,7 @@ API_DIR = API
 DB_DIR = db
 REQ_DIR = .
 PYDOC = python3 -m pydoc -w
+# TESTFINDER = nose2
 
 FORCE:
 
