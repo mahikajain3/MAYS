@@ -19,8 +19,10 @@ For more information, check out https://makerspace.engineering.nyu.edu/digital-b
 - Use flask_restx to build an API server
 - Handle each major requirement with an API endpoint
   - Endpoint '/create_user'
+  - Endpoint '/list_users' 
   - Endpoint '/list_badges'
   - Endpoint '/list_trainings'
+  - More endpoints tbd
 - Use Test-Driven-Development (TDD) to make sure we have testing
 - Use Swagger for initial interaction with server
 - Use Swagger, pydoc and good docstrings for documentation
