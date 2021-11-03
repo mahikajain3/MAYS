@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#export MAYS_HOME=/Users/mahikajain/Desktop/MAYS
+export MAYS_HOME=/Users/mahikajain/Desktop/MAYS
 
 HOST=127.0.0.1
 PORT=8000
