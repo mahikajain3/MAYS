@@ -6,6 +6,7 @@ The endpoint called `endpoints` will return all available endpoints.
 from http import HTTPStatus
 from flask import Flask
 from flask_restx import Resource, Api
+import werkzeug.exceptions as wz
 import db.db as db
 
 
@@ -35,15 +36,35 @@ class ListUsers(Resource):
     """
     This endpoint return a list of all the users.
     """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     def get(self):
         """
         Returns list of all users.
         """
         users = db.get_users()
         if users is None:
-            pass
+            raise (wz.NotFound("List of users db not found."))
         else:
             return users
+
+
+@api.route('/create_users/<username>')
+class CreateUser(Resource):
+    """
+    This endpoint adds a new user to the list of all the users.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def post(self, username):
+        """
+        This method adds a new user to the list of all users.
+        """
+        ret = db.add_user(username)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("List of users db not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("User name already exists."))
 
 
 @api.route('/endpoints')

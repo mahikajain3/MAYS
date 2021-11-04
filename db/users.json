@@ -1,4 +1,18 @@
 {
-    "user1": {"first_name": "Test", "last_name": "User", "net_id": "ab123"},
-    "user2": {"first_name": "Mahika", "last_name": "Jain", "net_id": "mj2249"}
+    "user1": {
+        "first_name": "Test",
+        "last_name": "User",
+        "net_id": "ab123"
+    },
+    "user2": {
+        "first_name": "Mahika",
+        "last_name": "Jain",
+        "net_id": "mj2249"
+    },
+    "new user6203105115515": {
+        "num_users": 0
+    },
+    "new user681021293196": {
+        "num_users": 0
+    }
 }
