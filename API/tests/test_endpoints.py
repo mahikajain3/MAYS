@@ -27,7 +27,7 @@ class EndpointTestCase(TestCase):
                 hello = ep.HelloWorld(Resource)
                 ret = hello.get()
                 self.assertIsInstance(ret, dict)
-                self.assertNotIn(ep.HELLO, ret)
+                self.assertIn(ep.HELLO, ret)
 
 	def test_create_user(self):
 		"""
