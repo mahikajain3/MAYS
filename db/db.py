@@ -8,8 +8,13 @@ import json
 import os
 
 MAYS_HOME = os.environ["MAYS_HOME"]
+TEST_MODE = os.environ.get("TEST_MODE", 0)
+DB_DIR = f"{MAYS_HOME}/db"
 
-USERS_DB = f"{MAYS_HOME}/db/users.json"
+if TEST_MODE:
+    USERS_DB = f"{DB_DIR}/test_users.json"
+else:
+    USERS_DB = f"{DB_DIR}/users.json"
 
 OK = 0
 NOT_FOUND = 1

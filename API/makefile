@@ -5,3 +5,4 @@ docs: $(DOCFILES)
 %.html: %.py
 	pydoc3 -w ./$<
 	git add $@
+include ../common.mk
