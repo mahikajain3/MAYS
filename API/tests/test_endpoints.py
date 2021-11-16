@@ -37,7 +37,7 @@ class EndpointTestCase(TestCase):
 		new_user = new_user_name()
 		ret = cr.post(new_user)
 		users = db.get_users()
-		self.assertNotIn(new_user, users)
+		self.assertIn(new_user, users)
 
 	def test_list_user1(self):
 		"""
