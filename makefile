@@ -17,6 +17,7 @@ github: FORCE
 	git push origin master
 
 dev_env: FORCE
+	- ./setup.sh MAYS_HOME
 	pip install -r $(REQ_DIR)/requirements-dev.txt
 
 all_tests: FORCE

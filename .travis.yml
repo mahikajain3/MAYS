@@ -6,6 +6,7 @@ install:
     - pip install -r requirements-dev.txt
 
 env:
+    - MAYS_HOME=/home/travis/build/mahikajain3/testSE
     - PYTHONPATH=/home/travis/build/mahikajain3/testSE
 
 script:
