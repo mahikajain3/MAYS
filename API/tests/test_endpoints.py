@@ -6,15 +6,19 @@ from unittest import TestCase, skip
 from flask_restx import Resource, Api
 
 import API.endpoints as ep
-import db.db as db
+import db.data as db
 import random
 
 
 HUGE_NUM = 10000000000000
 
-def new_user_name():
+def new_entity_name(entity_type):
+	"""
+	Randomly create entity name for test
+	"""
 	int_name = random.randint(0, HUGE_NUM)	
-	return "new user" + str(int_name)
+	return f"new {entity_type}" + str(int_name)
+
 
 class EndpointTestCase(TestCase):
 	def setUp(self):
@@ -28,13 +32,13 @@ class EndpointTestCase(TestCase):
                 ret = hello.get()
                 self.assertIsInstance(ret, dict)
                 self.assertIn(ep.HELLO, ret)
-
+	
 	def test_create_user(self):
 		"""
 		Post-condition: return is a dictionary.
 		"""
 		cr = ep.CreateUser(Resource)
-		new_user = new_user_name()
+		new_user = new_entity_name("user")
 		ret = cr.post(new_user)
 		users = db.get_users()
 		self.assertIn(new_user, users)

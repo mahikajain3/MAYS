@@ -9,36 +9,44 @@ import os
 
 MAYS_HOME = os.environ["MAYS_HOME"]
 TEST_MODE = os.environ.get("TEST_MODE", 0)
-DB_DIR = f"{MAYS_HOME}/db"
 
 if TEST_MODE:
-    USERS_DB = f"{DB_DIR}/test_users.json"
+    DB_DIR = f"{MAYS_HOME}/db/test_dbs"
 else:
-    USERS_DB = f"{DB_DIR}/users.json"
+    DB_DIR = f"{MAYS_HOME}/db"
+
+USER_COLLECTION = f"{DB_DIR}/users.json"
 
 OK = 0
 NOT_FOUND = 1
 DUPLICATE = 2
 
 
-def write_users(users):
+def write_collection(perm_version, mem_version):
     """
-    Write new user name in json file (db).
+    Write out the in-memory data collection in proper DB format.
     """
-    with open(USERS_DB, 'w') as f:
-        json.dump(users, f, indent=4)
+    with open(perm_version, 'w') as f:
+        json.dump(mem_version, f, indent=4)
+
+
+def read_collection(perm_version):
+    """
+    A function to read a collection off of disk.
+    """
+    try:
+        with open(perm_version) as file:
+            return json.loads(file.read())
+    except FileNotFoundError:
+        print(f"{perm_version} not found.")
+        return None
 
 
 def get_users():
     """
     A function to return all users.
     """
-    try:
-        with open(USERS_DB) as file:
-            return json.loads(file.read())
-    except FileNotFoundError:
-        print("Users db not found")
-        return None
+    return read_collection(USER_COLLECTION)
 
 
 def add_user(username):
@@ -52,6 +60,6 @@ def add_user(username):
     elif username in users:
         return DUPLICATE
     else:
-        users[username] = {"num_users": 0}
-        write_users(users)
+        users[username] = {}
+        write_collection(USER_COLLECTION, users)
         return OK

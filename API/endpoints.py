@@ -7,7 +7,7 @@ from http import HTTPStatus
 from flask import Flask
 from flask_restx import Resource, Api
 import werkzeug.exceptions as wz
-import db.db as db
+import db.data as db
 
 
 app = Flask(__name__)
@@ -31,7 +31,7 @@ class HelloWorld(Resource):
         return {HELLO: WORLD}
 
 
-@api.route('/list_users')
+@api.route('/users/list')
 class ListUsers(Resource):
     """
     This endpoint return a list of all the users.
@@ -49,7 +49,7 @@ class ListUsers(Resource):
             return users
 
 
-@api.route('/create_users/<username>')
+@api.route('/users/create/<username>')
 class CreateUser(Resource):
     """
     This endpoint adds a new user to the list of all the users.
@@ -65,6 +65,8 @@ class CreateUser(Resource):
             raise (wz.NotFound("List of users db not found."))
         elif ret == db.DUPLICATE:
             raise (wz.NotAcceptable("User name already exists."))
+        else:
+            return f"{username} added."
 
 
 @api.route('/endpoints')
@@ -73,6 +75,7 @@ class Endpoints(Resource):
     This class will serve as live, fetchable documentation of what endpoints
     are available in the system.
     """
+    @api.response(HTTPStatus.OK, 'Success')
     def get(self):
         """
         The `get()` method will return a list of available endpoints.
