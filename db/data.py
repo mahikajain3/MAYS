@@ -22,6 +22,11 @@ NOT_FOUND = 1
 DUPLICATE = 2
 
 
+# if os.environ.get("LOCAL_MONGO", False):
+# else:
+#    client = pm.MongoClient()
+# print(client)
+
 def write_collection(perm_version, mem_version):
     """
     Write out the in-memory data collection in proper DB format.
