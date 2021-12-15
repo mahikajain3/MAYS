@@ -19,16 +19,19 @@ else:
 
 ROOMS = "rooms"
 USERS = "users"
+TRAININGS = "trainings"
+BADGES = "badges"
 
 # field names in our DB:
 USER_NM = "userName"
 ROOM_NM = "roomName"
 NUM_USERS = "num_users"
+TRAININGS_NM = "trainingName"
+BADGES_NM = "badgeName"
 
 OK = 0
 NOT_FOUND = 1
 DUPLICATE = 2
-
 
 client = dbc.get_client()
 if client is None:
@@ -91,6 +94,20 @@ def get_users():
     A function to return a dictionary of all users.
     """
     return dbc.fetch_all(USERS, USER_NM)
+
+
+def get_trainings():
+    """
+    A function to return a dictionary of all users.
+    """
+    return dbc.fetch_all(TRAININGS, TRAININGS_NM)
+
+
+def get_badges():
+    """
+    A function to return a dictionary of all users.
+    """
+    return dbc.fetch_all(BADGES, BADGES_NM)
 
 
 def add_user(username):
