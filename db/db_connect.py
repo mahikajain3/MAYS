@@ -4,15 +4,19 @@ This file contains some common MongoDB code.
 import os
 import json
 import pymongo as pm
+from pymongo.server_api import ServerApi
 import bson.json_util as bsutil
 
 # all of these will eventually be put in the env:
-user_nm = "gcallah"
+user_nm = "mahikajain3"
 cloud_db = "serverlessinstance0.irvgp.mongodb.net"
 passwd = os.environ.get("MONGO_PASSWD", '')
 cloud_mdb = "mongodb+srv"
 db_params = "retryWrites=true&w=majority"
-db_nm = "chatDB"
+db_nm = "maysDB"
+
+REMOTE = "0"
+LOCAL = "1"
 
 client = None
 
