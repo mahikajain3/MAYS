@@ -31,9 +31,7 @@ def get_client():
     if os.environ.get("LOCAL_MONGO", False):
         client = pm.MongoClient()
     else:
-        client = pm.MongoClient(f"mongodb+srv://{user_nm}:{passwd}.@{cloud_db}"
-                                + f"/{db_nm}?{db_params}",
-                                server_api=pm.ServerApi('1'))
+        client = pm.MongoClient()
     return client
 
 
