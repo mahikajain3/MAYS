@@ -56,6 +56,7 @@ class CreateUser(Resource):
     """
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
     def post(self, username):
         """
         This method adds a new user to the list of all users.

@@ -8,11 +8,17 @@ import bson.json_util as bsutil
 
 # all of these will eventually be put in the env:
 user_nm = "gcallah"
-cloud_db = "serverlessinstance0.irvgp.mongodb.net"
+cloud_svc = "serverlessinstance0.irvgp.mongodb.net"
 passwd = os.environ.get("MONGO_PASSWD", '')
 cloud_mdb = "mongodb+srv"
 db_params = "retryWrites=true&w=majority"
-db_nm = "chatDB"
+db_nm = "maysDB"
+
+if os.environ.get("TEST_MODE", ''):
+    db_nm = "test_maysDB"
+
+REMOTE = 0
+LOCAL = 1
 
 client = None
 
@@ -24,13 +30,26 @@ def get_client():
     Also set global client variable.
     """
     global client
-    if os.environ.get("LOCAL_MONGO", False):
+    if os.environ.get("LOCAL_MONGO", REMOTE) == LOCAL:
+        print("Connecting to Mongo locally.")
         client = pm.MongoClient()
     else:
-        client = pm.MongoClient(f"mongodb+srv://{user_nm}:{passwd}.@{cloud_db}"
-                                + f"/{db_nm}?{db_params}",
-                                server_api=pm.ServerApi('1'))
+        client = pm.MongoClient()  # replace this with cloud later
     return client
+
+
+def fetch_one(collect_nm, filters={}):
+    """
+    Fetch one record that meets filters.
+    """
+    return client[db_nm][collect_nm].find_one(filters)
+
+
+def del_one(collect_nm, filters={}):
+    """
+    Delete one record that meets filters.
+    """
+    return client[db_nm][collect_nm].delete_one(filters)
 
 
 def fetch_all(collect_nm, key_nm):
