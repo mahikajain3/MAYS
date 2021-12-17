@@ -7,7 +7,7 @@ import pymongo as pm
 import bson.json_util as bsutil
 
 # all of these will eventually be put in the env:
-user_nm = "gcallah"
+user_nm = "mahikajain3"
 cloud_svc = "serverlessinstance0.irvgp.mongodb.net"
 passwd = os.environ.get("MONGO_PASSWD", '')
 cloud_mdb = "mongodb+srv"

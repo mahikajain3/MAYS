@@ -11,11 +11,16 @@ import db.db_connect as dbc
 MAYS_HOME = os.environ["MAYS_HOME"]
 TEST_MODE = os.environ.get("TEST_MODE", 0)
 
+
 # collection name
 USERS = "users"
+TRAININGS = "trainings"
+BADGES = "badges"
 
 # field names in our DB:
 USER_NM = "name"
+TRAININGS_NM = "trainingName"
+BADGES_NM = "badgeName"
 
 OK = 0
 NOT_FOUND = 1
@@ -43,6 +48,20 @@ def user_exists(username):
     return rec is not None
 
 
+def get_trainings():
+    """
+    A function to return a dictionary of all users.
+    """
+    return dbc.fetch_all(TRAININGS, TRAININGS_NM)
+
+
+def get_badges():
+    """
+    A function to return a dictionary of all users.
+    """
+    return dbc.fetch_all(BADGES, BADGES_NM)
+
+
 def add_user(username):
     """
     Add a new user to the user database.
@@ -52,4 +71,14 @@ def add_user(username):
         return DUPLICATE
     else:
         dbc.insert_doc(USERS, {USER_NM: username})  # for now netid is all 0
+
+
+def del_user(username):
+    """
+    Delete username from the db.
+    """
+    if not user_exists(username):
+        return NOT_FOUND
+    else:
+        dbc.del_one(USERS, filters={USER_NM: username})
         return OK

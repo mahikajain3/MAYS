@@ -1,0 +1,16 @@
+{
+  "badge1": {
+    "owner": "Sarah",
+    "qualification_for": "3D Printer",
+    "net_id": "ab123"
+  },
+  "badge2": {
+    "owner": "Sarah",
+    "qualification_for": "MakerSpace",
+    "net_id": "mj2249"
+  },
+  "Aliah": {
+    "num_users": 0
+  },
+  "momo": {}
+}
