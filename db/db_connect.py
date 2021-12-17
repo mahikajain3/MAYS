@@ -4,19 +4,21 @@ This file contains some common MongoDB code.
 import os
 import json
 import pymongo as pm
-from pymongo.server_api import ServerApi
 import bson.json_util as bsutil
 
 # all of these will eventually be put in the env:
 user_nm = "mahikajain3"
-cloud_db = "serverlessinstance0.irvgp.mongodb.net"
+cloud_svc = "serverlessinstance0.irvgp.mongodb.net"
 passwd = os.environ.get("MONGO_PASSWD", '')
 cloud_mdb = "mongodb+srv"
 db_params = "retryWrites=true&w=majority"
 db_nm = "maysDB"
 
-REMOTE = "0"
-LOCAL = "1"
+if os.environ.get("TEST_MODE", ''):
+    db_nm = "test_maysDB"
+
+REMOTE = 0
+LOCAL = 1
 
 client = None
 
@@ -28,11 +30,26 @@ def get_client():
     Also set global client variable.
     """
     global client
-    if os.environ.get("LOCAL_MONGO", False):
+    if os.environ.get("LOCAL_MONGO", REMOTE) == LOCAL:
+        print("Connecting to Mongo locally.")
         client = pm.MongoClient()
     else:
-        client = pm.MongoClient()
+        client = pm.MongoClient()  # replace this with cloud later
     return client
+
+
+def fetch_one(collect_nm, filters={}):
+    """
+    Fetch one record that meets filters.
+    """
+    return client[db_nm][collect_nm].find_one(filters)
+
+
+def del_one(collect_nm, filters={}):
+    """
+    Delete one record that meets filters.
+    """
+    return client[db_nm][collect_nm].delete_one(filters)
 
 
 def fetch_all(collect_nm, key_nm):
