@@ -120,3 +120,10 @@ class EndpointTestCase(TestCase):
         ret = lr.get()
         for val in ret.values():
             self.assertIsInstance(val, dict)
+
+    def test_delete_user(self):
+        de = ep.DeleteUser(Resource)
+        delete_user = new_entity_name("user")
+        ret = de.post(delete_user)
+        users = db.get_users()
+        self.assertNotIn(delete_user,users)
