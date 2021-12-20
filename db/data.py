@@ -9,8 +9,6 @@ import os
 import db.db_connect as dbc
 
 MAYS_HOME = os.environ["MAYS_HOME"]
-TEST_MODE = os.environ.get("TEST_MODE", 0)
-
 
 # collection name
 USERS = "users"
@@ -18,7 +16,7 @@ TRAININGS = "trainings"
 BADGES = "badges"
 
 # field names in our DB:
-USER_NM = "name"
+USER_NM = "userName"
 TRAININGS_NM = "trainingName"
 BADGES_NM = "badgeName"
 
@@ -66,11 +64,10 @@ def add_user(username):
     """
     Add a new user to the user database.
     """
-    print(f"{username=}")
     if user_exists(username):
         return DUPLICATE
     else:
-        dbc.insert_doc(USERS, {USER_NM: username})  # for now netid is all 0
+        dbc.insert_doc(USERS, {USER_NM: username})
 
 
 def del_user(username):
