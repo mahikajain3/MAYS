@@ -5,6 +5,7 @@ Gradually, we will fill in actual calls to our datastore.
 """
 
 import os
+#import json
 
 import db.db_connect as dbc
 
@@ -23,6 +24,40 @@ BADGES_NM = "badgeName"
 OK = 0
 NOT_FOUND = 1
 DUPLICATE = 2
+
+# DEMO_HOME = os.environ["DEMO_HOME"]
+# TEST_MODE = os.environ.get("TEST_MODE", 0)
+#
+# if TEST_MODE:
+#     DB_DIR = f"{DEMO_HOME}/db/test_dbs"
+# else:
+#     DB_DIR = f"{DEMO_HOME}/db"
+#
+# BADGES_COLLECTION = f"{DB_DIR}/badges.json"
+# USER_COLLECTION = f"{DB_DIR}/users.json"
+# TRAININGS_COLLECTION = f"{DB_DIR}/trainings.json"
+
+# def write_collection(perm_version, mem_version):
+#     """
+#     Write out the in-memory data collection in proper DB format.
+#     """
+#     with open(perm_version, 'w') as f:
+#         json.dump(mem_version, f, indent=4)
+#
+#
+# def read_collection(perm_version):
+#     """
+#     A function to read a colleciton off of disk.
+#     """
+#     print(f"{perm_version=}")
+#     try:
+#         with open(perm_version) as file:
+#             return json.loads(file.read())
+#     except FileNotFoundError:
+#         print(f"{perm_version} not found.")
+#         return None
+
+
 
 client = dbc.get_client()
 if client is None:
@@ -50,6 +85,7 @@ def get_trainings():
     """
     A function to return a dictionary of all users.
     """
+    # return read_collection(TRAININGS_COLLECTION)
     return dbc.fetch_all(TRAININGS, TRAININGS_NM)
 
 
@@ -57,6 +93,7 @@ def get_badges():
     """
     A function to return a dictionary of all users.
     """
+    # return read_collection(BADGES_COLLECTION)
     return dbc.fetch_all(BADGES, BADGES_NM)
 
 
