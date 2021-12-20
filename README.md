@@ -5,7 +5,8 @@ For more information, check out https://makerspace.engineering.nyu.edu/digital-b
 
 ## Requirements
 
-- Create user
+- Create and delete user
+- Update user information
 - Store student information in a database (First name, Last name, netID, barcode)
 - List badges for users
 - List workshops and trainings associated with each badge
@@ -18,10 +19,13 @@ For more information, check out https://makerspace.engineering.nyu.edu/digital-b
 
 - Use flask_restx to build an API server
 - Handle each major requirement with an API endpoint
-  - Endpoint '/create_user'
-  - Endpoint '/list_users' 
-  - Endpoint '/list_badges'
-  - Endpoint '/list_trainings'
+  - Endpoint '/users/list'
+  - Endpoint '/badges/list' 
+  - Endpoint '/trainings/list'
+  - Endpoint '/workshops/list'
+  - Endpoint '/users/create'
+  - Endpoint '/users/delete'
+  - Endpoint '/users/update'
   - More endpoints tbd
 - Use Test-Driven-Development (TDD) to make sure we have testing
 - Use Swagger for initial interaction with server
