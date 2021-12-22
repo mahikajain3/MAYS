@@ -9,7 +9,9 @@ For more information, check out https://makerspace.engineering.nyu.edu/digital-b
 - Update user information
 - Store student information in a database (First name, Last name, netID, barcode)
 - List badges for users
-- List workshops and trainings associated with each badge
+- List workshops 
+- List trainings 
+- Create association between workshops and trainings with each badge
 - Get number of trainings/workshops attendance required per badge
 - Create and get record of what trainings/workshops student has completed
 - Create and get record of how many more attendances are needed to earn a specific badge
@@ -30,3 +32,4 @@ For more information, check out https://makerspace.engineering.nyu.edu/digital-b
 - Use Test-Driven-Development (TDD) to make sure we have testing
 - Use Swagger for initial interaction with server
 - Use Swagger, pydoc and good docstrings for documentation
+- Use MongoDB for data storage, connected to cloud
