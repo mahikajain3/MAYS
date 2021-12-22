@@ -53,14 +53,14 @@ class ListUsers(Resource):
 @api.route('/badges/list')
 class ListBadges(Resource):
     """
-    This endpoint return a list of all the users.
+    This endpoint return a list of all the badges.
     """
 
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     def get(self):
         """
-        Returns list of all users.
+        Returns list of all badges.
         """
         badges = db.get_badges()
         if badges is None:
@@ -72,20 +72,39 @@ class ListBadges(Resource):
 @api.route('/trainings/list')
 class ListTrainings(Resource):
     """
-    This endpoint return a list of all the users.
+    This endpoint return a list of all the trainings.
     """
 
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     def get(self):
         """
-        Returns list of all users.
+        Returns list of all trainings.
         """
         trainings = db.get_trainings()
         if trainings is None:
             raise (wz.NotFound("List of trainings db not found."))
         else:
             return trainings
+
+
+@api.route('/workshops/list')
+class ListWorkshops(Resource):
+    """
+    This endpoint return a list of all the workshops.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def get(self):
+        """
+        Returns list of all workshops.
+        """
+        workshops = db.get_workshops()
+        if workshops is None:
+            raise (wz.NotFound("List of workshops db not found."))
+        else:
+            return workshops
 
 
 @api.route('/users/create/<username>')
@@ -124,17 +143,3 @@ class Endpoints(Resource):
         """
         endpoints = sorted(rule.rule for rule in api.app.url_map.iter_rules())
         return {"Available endpoints": endpoints}
-
-
-@api.route('/pets/<username>')
-class Pets(Resource):
-    """
-    This class supports fetching a list of all pets.
-    """
-
-    @api.response(HTTPStatus.OK, 'Success')
-    def post(self, username):
-        """
-        This method returns all pets.
-        """
-        return username

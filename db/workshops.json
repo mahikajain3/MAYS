@@ -1,0 +1,12 @@
+{
+    "workshop1": {
+      "Student_name": "Sarah",
+      "Attended": "Y",
+      "net_id": "ab123"
+    },
+    "workshop2": {
+      "Student_name": "Sarahb",
+      "Attended": "Y",
+      "net_id": "ab1234"
+    }
+  }

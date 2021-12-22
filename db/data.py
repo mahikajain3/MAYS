@@ -15,11 +15,13 @@ MAYS_HOME = os.environ["MAYS_HOME"]
 USERS = "users"
 TRAININGS = "trainings"
 BADGES = "badges"
+WORKSHOPS = "workshops"
 
 # field names in our DB:
 USER_NM = "userName"
 TRAININGS_NM = "trainingName"
 BADGES_NM = "badgeName"
+WORKSHOPS_NM = "workshopName"
 
 OK = 0
 NOT_FOUND = 1
@@ -83,7 +85,7 @@ def user_exists(username):
 
 def get_trainings():
     """
-    A function to return a dictionary of all users.
+    A function to return a dictionary of all trainings.
     """
     # return read_collection(TRAININGS_COLLECTION)
     return dbc.fetch_all(TRAININGS, TRAININGS_NM)
@@ -91,10 +93,17 @@ def get_trainings():
 
 def get_badges():
     """
-    A function to return a dictionary of all users.
+    A function to return a dictionary of all badges.
     """
     # return read_collection(BADGES_COLLECTION)
     return dbc.fetch_all(BADGES, BADGES_NM)
+
+def get_workshops():
+    """
+    A function to return a dictionary of all workshops.
+    """
+    # return read_collection(WORKSHOPS_COLLECTION)
+    return dbc.fetch_all(WORKSHOPS, WORKSHOPS_NM)
 
 
 def add_user(username):
