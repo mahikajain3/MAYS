@@ -12,8 +12,9 @@ jobs:
       MAYS_HOME: /home/runner/work/MAYS/MAYS
       MONGO_PASSWD: ${{secrets.MONGO_PASSWD}}
     steps:
+      - uses: actions/checkout@v2
+      
       - name: Install requirements
-        uses: actions/checkout@v2
         run:  pip install -r requirements-dev.txt
       
       - name: Run tests
