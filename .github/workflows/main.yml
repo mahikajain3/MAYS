@@ -12,15 +12,15 @@ jobs:
       MAYS_HOME: /home/runner/work/MAYS/MAYS
       MONGO_PASSWD: ${{secrets.MONGO_PASSWD}}
     steps:
-      - uses: actions/checkout@v2
       - name: Install requirements
+        uses: actions/checkout@v2
         run:  pip install -r requirements-dev.txt
       
       - name: Run tests
         run: make all_tests
       
       - name: Deploy to Heroku
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "testse123" #Must be unique in Heroku
