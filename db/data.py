@@ -95,6 +95,7 @@ def get_badges():
     # return read_collection(BADGES_COLLECTION)
     return dbc.fetch_all(BADGES, BADGES_NM)
 
+
 def get_workshops():
     """
     A function to return a dictionary of all workshops.
