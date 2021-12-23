@@ -129,6 +129,26 @@ class CreateUser(Resource):
             return f"{username} added."
 
 
+@api.route('/users/delete/<username>')
+class DeleteUser(Resource):
+    """
+    This endpoint removes an existed user from the list of all the users.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def post(self, username):
+        """
+        This method removes an existed user from the list of all users.
+        """
+        ret = db.del_user(username)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("This user does not exist in the users list."))
+        else:
+            return f"{username} deleted."
+
+
 @api.route('/endpoints')
 class Endpoints(Resource):
     """
