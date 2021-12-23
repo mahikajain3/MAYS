@@ -5,7 +5,7 @@ Gradually, we will fill in actual calls to our datastore.
 """
 
 import os
-#import json
+# import json
 
 import db.db_connect as dbc
 
@@ -58,9 +58,6 @@ DUPLICATE = 2
 #     except FileNotFoundError:
 #         print(f"{perm_version} not found.")
 #         return None
-
-
-
 client = dbc.get_client()
 if client is None:
     print("Failed to connect to MongoDB")
@@ -102,6 +99,7 @@ def get_workshops():
     """
     A function to return a dictionary of all workshops.
     """
+
     # return read_collection(WORKSHOPS_COLLECTION)
     return dbc.fetch_all(WORKSHOPS, WORKSHOPS_NM)
 
