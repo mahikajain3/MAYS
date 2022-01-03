@@ -18,8 +18,8 @@ db_nm = "maysDB"
 if os.environ.get("TEST_MODE", ''):
     db_nm = "test_maysDB"
 
-REMOTE = 0
-LOCAL = 1
+REMOTE = "0"
+LOCAL = "1"
 
 client = None
 
