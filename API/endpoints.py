@@ -88,6 +88,27 @@ class ListTrainings(Resource):
             return trainings
 
 
+class CreateWorkshops(Resource):
+    """
+    This endpoint adds a new user to the list of all the users.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def post(self, workshopname):
+        """
+        This method adds a new user to the list of all users.
+        """
+        ret = db.add_workshop(workshopname)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("List of users db not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("Workshop name already exists."))
+        else:
+            return f"{workshopname} added."
+
+
 @api.route('/workshops/list')
 class ListWorkshops(Resource):
     """

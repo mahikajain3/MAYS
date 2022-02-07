@@ -115,6 +115,16 @@ def add_user(username):
         dbc.insert_doc(USERS, {USER_NM: username})
 
 
+def add_workshop(workshopname):
+    """
+    Add a new user to the user database.
+    """
+    if user_exists(workshopname):
+        return DUPLICATE
+    else:
+        dbc.insert_doc(USERS, {WORKSHOPS_NM: workshopname})
+
+
 def del_user(username):
     """
     Delete username from the db.
