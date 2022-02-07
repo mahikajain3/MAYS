@@ -122,7 +122,7 @@ def add_workshop(workshopname):
     if user_exists(workshopname):
         return DUPLICATE
     else:
-        dbc.insert_doc(USERS, {WORKSHOPS_NM: workshopname})
+        dbc.insert_doc(WORKSHOPS, {WORKSHOPS_NM: workshopname})
 
 
 def del_user(username):

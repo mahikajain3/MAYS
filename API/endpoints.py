@@ -102,7 +102,7 @@ class CreateWorkshops(Resource):
         """
         ret = db.add_workshop(workshopname)
         if ret == db.NOT_FOUND:
-            raise (wz.NotFound("List of users db not found."))
+            raise (wz.NotFound("List of workshops db not found."))
         elif ret == db.DUPLICATE:
             raise (wz.NotAcceptable("Workshop name already exists."))
         else:
