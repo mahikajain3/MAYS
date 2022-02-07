@@ -58,7 +58,7 @@ class EndpointTestCase(TestCase):
         Post-condition: return is a dictionary.
         """
         cr = ep.CreateTraining(Resource)
-        new_user = new_entity_name("training")
+        new_training = new_entity_name("training")
         ret = cr.post(new_training)
         trainings = db.get_trainings()
         self.assertIn(new_training, trainings)
