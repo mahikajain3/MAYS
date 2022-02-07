@@ -90,7 +90,7 @@ class ListTrainings(Resource):
 
 class CreateWorkshops(Resource):
     """
-    This endpoint adds a new user to the list of all the users.
+    This endpoint adds a new workshop to the list of all the workshops.
     """
 
     @api.response(HTTPStatus.OK, 'Success')

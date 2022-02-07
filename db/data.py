@@ -80,6 +80,15 @@ def user_exists(username):
     return rec is not None
 
 
+def workshop_exists(workshopname):
+    """
+    See if a user with username is in the db.
+    Returns True or False
+    """
+    rec = dbc.fetch_one(WORKSHOPS, filters={WORKSHOPS_NM: workshopname})
+    return rec is not None
+
+
 def get_trainings():
     """
     A function to return a dictionary of all trainings.
@@ -117,9 +126,9 @@ def add_user(username):
 
 def add_workshop(workshopname):
     """
-    Add a new user to the user database.
+    Add a new workshop to the workshop database.
     """
-    if user_exists(workshopname):
+    if workshop_exists(workshopname):
         return DUPLICATE
     else:
         dbc.insert_doc(WORKSHOPS, {WORKSHOPS_NM: workshopname})
