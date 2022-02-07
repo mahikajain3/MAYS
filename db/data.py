@@ -134,6 +134,16 @@ def add_workshop(workshopname):
         dbc.insert_doc(WORKSHOPS, {WORKSHOPS_NM: workshopname})
 
 
+def add_training(trainingname):
+    """
+    Add a new training to the training database.
+    """
+    if training_exists(trainingname):
+        return DUPLICATE
+    else:
+        dbc.insert_doc(TRAININGS, {TRAINING_NM: trainingname})
+        
+
 def del_user(username):
     """
     Delete username from the db.

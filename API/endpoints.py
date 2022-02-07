@@ -68,6 +68,25 @@ class ListBadges(Resource):
         else:
             return badges
 
+class CreateTrainings(Resource):
+    """
+    This endpoint adds a new training to the list of all the trainings.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def post(self, trainingname):
+        """
+        This method adds a new user to the list of all users.
+        """
+        ret = db.add_training(trainingname)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("List of trainings db not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("Training name already exists."))
+        else:
+            return f"{trainingname} added."
+
 
 @api.route('/trainings/list')
 class ListTrainings(Resource):
