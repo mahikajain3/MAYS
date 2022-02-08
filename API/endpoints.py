@@ -68,6 +68,7 @@ class ListBadges(Resource):
         else:
             return badges
 
+
 class CreateTrainings(Resource):
     """
     This endpoint adds a new training to the list of all the trainings.
