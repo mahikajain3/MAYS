@@ -150,8 +150,8 @@ def add_training(trainingname):
     if training_exists(trainingname):
         return DUPLICATE
     else:
-        dbc.insert_doc(TRAININGS, {TRAINING_NM: trainingname})
-        
+        dbc.insert_doc(TRAININGS, {TRAININGS_NM: trainingname})
+
 
 def del_user(username):
     """
