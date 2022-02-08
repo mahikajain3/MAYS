@@ -89,6 +89,15 @@ def workshop_exists(workshopname):
     return rec is not None
 
 
+def training_exists(trainingname):
+    """
+    See if a training with trainingname is in the db.
+    Returns True or False
+    """
+    rec = dbc.fetch_one(TRAININGS, filters={TRAININGS_NM: trainingname})
+    return rec is not None
+
+
 def get_trainings():
     """
     A function to return a dictionary of all trainings.
