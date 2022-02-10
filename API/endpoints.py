@@ -71,6 +71,7 @@ class ListBadges(Resource):
             return badges
 
 
+@api.route('/trainings/create/<trainingname')
 class CreateTrainings(Resource):
     """
     This endpoint adds a new training to the list of all the trainings.
@@ -110,6 +111,7 @@ class ListTrainings(Resource):
             return trainings
 
 
+@api.route('/workshops/create/<workshopname>')
 class CreateWorkshops(Resource):
     """
     This endpoint adds a new workshop to the list of all the workshops.
