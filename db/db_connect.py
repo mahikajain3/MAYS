@@ -15,11 +15,13 @@ cloud_mdb = "mongodb+srv"
 db_params = "retryWrites=true&w=majority"
 db_nm = "maysDB"
 
+8
 if os.environ.get("TEST_MODE", ''):
     db_nm = "test_maysDB"
 
-REMOTE = 0
-LOCAL = 1
+
+REMOTE = "0"
+LOCAL = "1"
 
 client = None
 
