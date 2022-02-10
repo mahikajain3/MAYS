@@ -53,15 +53,15 @@ class EndpointTestCase(TestCase):
         workshops = db.get_workshops()
         self.assertIn(new_workshop, workshops)
 
-    def test_create_training(self):
+    def test_create_badges(self):
         """
         Post-condition: return is a dictionary.
         """
-        cr = ep.CreateTrainings(Resource)
-        new_training = new_entity_name("training")
-        ret = cr.post(new_training)
-        trainings = db.get_trainings()
-        self.assertIn(new_training, trainings)
+        cr = ep.CreateBadges(Resource)
+        new_badge = new_entity_name("badge")
+        ret = cr.post(new_badge)
+        badges = db.get_badges()
+        self.assertIn(new_badge, badges)
 
     def test_list_user1(self):
         """

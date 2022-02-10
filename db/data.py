@@ -89,6 +89,15 @@ def workshop_exists(workshopname):
     return rec is not None
 
 
+def badge_exists(badgename):
+    """
+    See if a user with username is in the db.
+    Returns True or False
+    """
+    rec = dbc.fetch_one(BADGES, filters={BADGES_NM: badgename})
+    return rec is not None
+
+
 def training_exists(trainingname):
     """
     See if a training with trainingname is in the db.
@@ -141,6 +150,16 @@ def add_workshop(workshopname):
         return DUPLICATE
     else:
         dbc.insert_doc(WORKSHOPS, {WORKSHOPS_NM: workshopname})
+
+
+def add_badge(badgename):
+    """
+    Add a new workshop to the workshop database.
+    """
+    if badge_exists(badgename):
+        return DUPLICATE
+    else:
+        dbc.insert_doc(BADGES, {BADGES_NM: badgename})
 
 
 def add_training(trainingname):
