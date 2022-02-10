@@ -15,10 +15,9 @@ cloud_mdb = "mongodb+srv"
 db_params = "retryWrites=true&w=majority"
 db_nm = "maysDB"
 
-8
+
 if os.environ.get("TEST_MODE", ''):
     db_nm = "test_maysDB"
-
 
 REMOTE = "0"
 LOCAL = "1"
@@ -38,7 +37,7 @@ def get_client():
         client = pm.MongoClient()
     else:
         print("Connecting to Mongo remotely.")
-        client = pm.MongoClient(f"mongodb+srv://aliahjefree:VNOAxCoN35OhdcE4\
+        client = pm.MongoClient(f"mongodb+srv://aliahjefree:{passwd}\
 @cluster0.bslxs.mongodb.net/{db_nm}?retryWrites=true&w=majority")
     return client
 

@@ -43,6 +43,26 @@ class EndpointTestCase(TestCase):
         users = db.get_users()
         self.assertIn(new_user, users)
 
+    def test_create_workshops(self):
+        """
+        Post-condition: return is a dictionary.
+        """
+        cr = ep.CreateWorkshops(Resource)
+        new_workshop = new_entity_name("workshop")
+        ret = cr.post(new_workshop)
+        workshops = db.get_workshops()
+        self.assertIn(new_workshop, workshops)
+
+    def test_create_training(self):
+        """
+        Post-condition: return is a dictionary.
+        """
+        cr = ep.CreateTrainings(Resource)
+        new_training = new_entity_name("training")
+        ret = cr.post(new_training)
+        trainings = db.get_trainings()
+        self.assertIn(new_training, trainings)
+
     def test_list_user1(self):
         """
         Post-condition 1: return is a dictionary.

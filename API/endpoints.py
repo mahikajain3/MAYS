@@ -71,6 +71,26 @@ class ListBadges(Resource):
             return badges
 
 
+class CreateTrainings(Resource):
+    """
+    This endpoint adds a new training to the list of all the trainings.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def post(self, trainingname):
+        """
+        This method adds a new user to the list of all users.
+        """
+        ret = db.add_training(trainingname)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("List of trainings db not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("Training name already exists."))
+        else:
+            return f"{trainingname} added."
+
+
 @api.route('/trainings/list')
 class ListTrainings(Resource):
     """
@@ -88,6 +108,27 @@ class ListTrainings(Resource):
             raise (wz.NotFound("List of trainings db not found."))
         else:
             return trainings
+
+
+class CreateWorkshops(Resource):
+    """
+    This endpoint adds a new workshop to the list of all the workshops.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def post(self, workshopname):
+        """
+        This method adds a new user to the list of all users.
+        """
+        ret = db.add_workshop(workshopname)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("List of workshops db not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("Workshop name already exists."))
+        else:
+            return f"{workshopname} added."
 
 
 @api.route('/workshops/list')
