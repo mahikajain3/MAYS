@@ -176,7 +176,7 @@ class ListWorkshops(Resource):
 @api.route('/workshops/delete/<workshopname>')
 class DeleteWorkshop(Resource):
     """
-    This endpoint removes an existed workshop from the list of all the workshops.
+    This endpoint removes an existed workshop from the workshops.
     """
 
     @api.response(HTTPStatus.OK, 'Success')
@@ -188,7 +188,7 @@ class DeleteWorkshop(Resource):
         """
         ret = db.del_workshop(workshopname)
         if ret == db.NOT_FOUND:
-            raise (wz.NotFound("This workshop does not exist in the workshop list."))
+            raise (wz.NotFound("Workshop does not exist in the workshop list."))
         else:
             return f"{workshopname} deleted."
 
