@@ -174,7 +174,7 @@ class ListWorkshops(Resource):
 
 
 @api.route('/workshops/delete/<workshopname>')
-class DeleteUser(Resource):
+class DeleteWorkshop(Resource):
     """
     This endpoint removes an existed workshop from the list of all the workshops.
     """
