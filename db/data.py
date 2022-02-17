@@ -181,3 +181,14 @@ def del_user(username):
     else:
         dbc.del_one(USERS, filters={USER_NM: username})
         return OK
+
+
+def del_workshop(workshopname):
+    """
+    Delete workshop from the db.
+    """
+    if not workshop_exists(workshopname):
+        return NOT_FOUND
+    else:
+        dbc.del_one(WORKSHOPS, filters={WORKSHOPS_NM: workshopname})
+        return OK

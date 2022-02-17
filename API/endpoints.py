@@ -173,6 +173,26 @@ class ListWorkshops(Resource):
             return workshops
 
 
+@api.route('/workshops/delete/<workshopname>')
+class DeleteUser(Resource):
+    """
+    This endpoint removes an existed workshop from the list of all the workshops.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def post(self, workshopname):
+        """
+        This method removes an existed user from the list of all users.
+        """
+        ret = db.del_workshop(workshopname)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("This workshop does not exist in the workshop list."))
+        else:
+            return f"{workshopname} deleted."
+
+
 @api.route('/users/create/<username>')
 class CreateUser(Resource):
     """
