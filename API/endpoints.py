@@ -188,7 +188,7 @@ class DeleteWorkshop(Resource):
         """
         ret = db.del_workshop(workshopname)
         if ret == db.NOT_FOUND:
-            raise (wz.NotFound("Workshop does not exist in the workshop list."))
+            raise (wz.NotFound("Workshop does not exist."))
         else:
             return f"{workshopname} deleted."
 
