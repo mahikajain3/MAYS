@@ -167,6 +167,16 @@ class EndpointTestCase(TestCase):
         for val in ret.values():
             self.assertIsInstance(val, dict)
 
+    def test_delete_workshop(self):
+        de = ep.DeleteWorkshop(Resource)
+        delete_workshop = new_entity_name("workshop")
+        cr = ep.CreateWorkshops(Resource)
+        cr.post(delete_workshop)
+
+        ret = de.post(delete_workshop)
+        workshops = db.get_workshops()
+        self.assertNotIn(delete_workshop,workshops)
+
     def test_delete_user(self):
         de = ep.DeleteUser(Resource)
         delete_user = new_entity_name("user")
