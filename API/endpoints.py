@@ -14,9 +14,6 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-HELLO = 'Hola'
-WORLD = 'mundo'
-
 
 @api.route('/users/list')
 class ListUsers(Resource):
@@ -87,7 +84,7 @@ class CreateTrainings(Resource):
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
     def post(self, trainingname):
         """
-        This method adds a new user to the list of all users.
+        This method adds a new training to the list of all trainings.
         """
         ret = db.add_training(trainingname)
         if ret == db.NOT_FOUND:
@@ -115,6 +112,27 @@ class ListTrainings(Resource):
             raise (wz.NotFound("List of trainings db not found."))
         else:
             return trainings
+
+
+@api.route('/trainings/update/<oldtrainingname>/<newtrainingname>')
+class UpdateTrainings(Resource):
+    """
+    This endpoint allows the user to update a training name.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def put(self, oldtrainingname, newtrainingname):
+        """
+        This method updates old training name to new training name.
+        """
+        ret = db.update_training(oldtrainingname, newtrainingname)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("List of trainings db not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("Training name already exists."))
+        else:
+            return f"{oldtrainingname} updated to {newtrainingname}."
 
 
 @api.route('/workshops/create/<workshopname>')

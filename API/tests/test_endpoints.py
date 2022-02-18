@@ -180,3 +180,14 @@ class EndpointTestCase(TestCase):
         ret = de.post(delete_user)
         users = db.get_users()
         self.assertNotIn(delete_user,users)
+
+    def test_update_training(self):
+        ut = ep.UpdateTrainings(Resource)
+        old_training = new_entity_name("trainingtoupdate")
+        new_training = new_entity_name("updatedtraining1")
+        cr = ep.CreateUser(Resource)
+        cr.post(old_training)
+
+        ret = ut.put(old_training, new_training)
+        trainings = db.get_trainings()
+        self.assertIn(new_training, trainings)

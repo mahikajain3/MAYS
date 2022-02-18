@@ -82,7 +82,7 @@ def user_exists(username):
 
 def workshop_exists(workshopname):
     """
-    See if a user with username is in the db.
+    See if a workshop with workshopname is in the db.
     Returns True or False
     """
     rec = dbc.fetch_one(WORKSHOPS, filters={WORKSHOPS_NM: workshopname})
@@ -191,4 +191,17 @@ def del_workshop(workshopname):
         return NOT_FOUND
     else:
         dbc.del_one(WORKSHOPS, filters={WORKSHOPS_NM: workshopname})
+        return OK
+
+
+def update_training(oldtrainingname, newtrainingname):
+    """
+    Update old training name in db with new training name.
+    """
+    if not training_exists(oldtrainingname):
+        return NOT_FOUND
+    elif training_exists(newtrainingname):
+        return DUPLICATE
+    else:
+        dbc.update_one(TRAININGS, filters={TRAININGS_NM: oldtrainingname}, updates={TRAININGS_NM: newtrainingname})
         return OK

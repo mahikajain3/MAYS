@@ -49,6 +49,13 @@ def fetch_one(collect_nm, filters={}):
     return client[db_nm][collect_nm].find_one(filters)
 
 
+def update_one(collect_nm, filters={}, updates={}):
+    """
+    Update one record that meets filters.
+    """
+    return client[db_nm][collect_nm].update_one(filters, updates)
+
+
 def del_one(collect_nm, filters={}):
     """
     Delete one record that meets filters.
