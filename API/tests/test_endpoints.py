@@ -184,7 +184,7 @@ class EndpointTestCase(TestCase):
     def test_update_training(self):
         ut = ep.UpdateTrainings(Resource)
         old_training = new_entity_name("trainingtoupdate")
-        new_training = new_entity_name("updatedtraining1")
+        new_training = new_entity_name("updatedtraining")
         cr = ep.CreateUser(Resource)
         cr.post(old_training)
 
