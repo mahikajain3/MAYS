@@ -198,10 +198,10 @@ def update_training(oldtrainingname, newtrainingname):
     """
     Update old training name in db with new training name.
     """
-    if not training_exists(oldtrainingname):
-        return NOT_FOUND
-    elif training_exists(newtrainingname):
-        return DUPLICATE
-    else:
-        dbc.update_one(TRAININGS, filters={TRAININGS_NM: oldtrainingname}, updates={TRAININGS_NM: newtrainingname})
-        return OK
+    #if not training_exists(oldtrainingname):
+    #    return NOT_FOUND
+    #elif training_exists(newtrainingname):
+    #   return DUPLICATE
+    #else:
+    dbc.update_one(TRAININGS, filters={TRAININGS_NM: oldtrainingname}, updates={TRAININGS_NM: newtrainingname})
+    return OK
