@@ -204,5 +204,5 @@ def update_training(oldtrainingname, newtrainingname):
     #   return DUPLICATE
     #else:
     #dbc.update_one(TRAININGS, filters={TRAININGS_NM: oldtrainingname}, updates={TRAININGS_NM: newtrainingname})
-    dbc.update_one(filters={TRAININGS_NM: oldtrainingname}, updates={{"$set": {TRAININGS_NM: newtrainingname}})
+    dbc.update_one(filters={TRAININGS_NM: oldtrainingname}, updates={"$set": {TRAININGS_NM: newtrainingname}})
     return OK
