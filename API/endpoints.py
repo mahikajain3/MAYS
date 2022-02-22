@@ -14,6 +14,13 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
+ns_user = api.namespace('users', description='user related endpoints')
+ns_badge = api.namespace('badges', description='badge related endpoints')
+ns_training = api.namespace('trainings',
+                            description='training related endpoints')
+ns_workshop = api.namespace('workshops',
+                            description='workshop related endpoints')
+
 
 @api.route('/endpoints')
 class Endpoints(Resource):
@@ -31,7 +38,7 @@ class Endpoints(Resource):
         return {"Available endpoints": endpoints}
 
 
-@api.route('/users/list')
+@ns_user.route('/list')
 class ListUsers(Resource):
     """
     This endpoint return a list of all the users.
@@ -50,7 +57,7 @@ class ListUsers(Resource):
             return users
 
 
-@api.route('/users/create/<username>')
+@ns_user.route('/create/<username>')
 class CreateUser(Resource):
     """
     This endpoint adds a new user to the list of all the users.
@@ -72,7 +79,7 @@ class CreateUser(Resource):
             return f"{username} added."
 
 
-@api.route('/users/update/<oldusername>/<newusername>')
+@ns_user.route('/update/<oldusername>/<newusername>')
 class UpdateUser(Resource):
     """
     This endpoint allows the user to update a user name.
@@ -94,7 +101,7 @@ class UpdateUser(Resource):
             return f"{oldusername} updated to {newusername}."
 
 
-@api.route('/users/delete/<username>')
+@ns_user.route('/delete/<username>')
 class DeleteUser(Resource):
     """
     This endpoint removes an existed user from the list of all the users.
@@ -114,7 +121,7 @@ class DeleteUser(Resource):
             return f"{username} deleted."
 
 
-@api.route('/badges/create/<badgename>')
+@ns_badge.route('/create/<badgename>')
 class CreateBadges(Resource):
     """
     This endpoint adds a new training to the list of all the trainings.
@@ -135,7 +142,7 @@ class CreateBadges(Resource):
             return f"{badgename} added."
 
 
-@api.route('/badges/list')
+@ns_badge.route('/list')
 class ListBadges(Resource):
     """
     This endpoint return a list of all the badges.
@@ -154,7 +161,7 @@ class ListBadges(Resource):
             return badges
 
 
-@api.route('/trainings/create/<trainingname>')
+@ns_training.route('/create/<trainingname>')
 class CreateTrainings(Resource):
     """
     This endpoint adds a new training to the list of all the trainings.
@@ -175,7 +182,7 @@ class CreateTrainings(Resource):
             return f"{trainingname} added."
 
 
-@api.route('/trainings/list')
+@ns_training.route('/list')
 class ListTrainings(Resource):
     """
     This endpoint return a list of all the trainings.
@@ -194,7 +201,7 @@ class ListTrainings(Resource):
             return trainings
 
 
-@api.route('/trainings/update/<oldtrainingname>/<newtrainingname>')
+@ns_training.route('/update/<oldtrainingname>/<newtrainingname>')
 class UpdateTrainings(Resource):
     """
     This endpoint allows the user to update a training name.
@@ -216,7 +223,7 @@ class UpdateTrainings(Resource):
             return f"{oldtrainingname} updated to {newtrainingname}."
 
 
-@api.route('/workshops/create/<workshopname>')
+@ns_workshop.route('/create/<workshopname>')
 class CreateWorkshops(Resource):
     """
     This endpoint adds a new workshop to the list of all the workshops.
@@ -238,7 +245,7 @@ class CreateWorkshops(Resource):
             return f"{workshopname} added."
 
 
-@api.route('/workshops/list')
+@ns_workshop.route('/list')
 class ListWorkshops(Resource):
     """
     This endpoint return a list of all the workshops.
@@ -257,7 +264,7 @@ class ListWorkshops(Resource):
             return workshops
 
 
-@api.route('/workshops/delete/<workshopname>')
+@ns_workshop.route('/delete/<workshopname>')
 class DeleteWorkshop(Resource):
     """
     This endpoint removes an existed workshop from the workshops.
