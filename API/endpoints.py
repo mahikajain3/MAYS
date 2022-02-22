@@ -15,6 +15,22 @@ CORS(app)
 api = Api(app)
 
 
+@api.route('/endpoints')
+class Endpoints(Resource):
+    """
+    This class will serve as live, fetchable documentation of what endpoints
+    are available in the system.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    def get(self):
+        """
+        The `get()` method will return a list of available endpoints.
+        """
+        endpoints = sorted(rule.rule for rule in api.app.url_map.iter_rules())
+        return {"Available endpoints": endpoints}
+
+
 @api.route('/users/list')
 class ListUsers(Resource):
     """
@@ -32,6 +48,70 @@ class ListUsers(Resource):
             raise (wz.NotFound("List of users db not found."))
         else:
             return users
+
+
+@api.route('/users/create/<username>')
+class CreateUser(Resource):
+    """
+    This endpoint adds a new user to the list of all the users.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def post(self, username):
+        """
+        This method adds a new user to the list of all users.
+        """
+        ret = db.add_user(username)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("List of users db not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("User name already exists."))
+        else:
+            return f"{username} added."
+
+
+@api.route('/users/update/<oldusername>/<newusername>')
+class UpdateUser(Resource):
+    """
+    This endpoint allows the user to update a user name.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def put(self, oldusername, newusername):
+        """
+        This method updates old user name to new user name.
+        """
+        ret = db.update_user(oldusername, newusername)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("List of users db not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("User name already exists."))
+        else:
+            return f"{oldusername} updated to {newusername}."
+
+
+@api.route('/users/delete/<username>')
+class DeleteUser(Resource):
+    """
+    This endpoint removes an existed user from the list of all the users.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def post(self, username):
+        """
+        This method removes an existed user from the list of all users.
+        """
+        ret = db.del_user(username)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("This user does not exist in the users list."))
+        else:
+            return f"{username} deleted."
 
 
 @api.route('/badges/create/<badgename>')
@@ -195,61 +275,3 @@ class DeleteWorkshop(Resource):
             raise (wz.NotFound("Workshop does not exist."))
         else:
             return f"{workshopname} deleted."
-
-
-@api.route('/users/create/<username>')
-class CreateUser(Resource):
-    """
-    This endpoint adds a new user to the list of all the users.
-    """
-
-    @api.response(HTTPStatus.OK, 'Success')
-    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
-    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def post(self, username):
-        """
-        This method adds a new user to the list of all users.
-        """
-        ret = db.add_user(username)
-        if ret == db.NOT_FOUND:
-            raise (wz.NotFound("List of users db not found."))
-        elif ret == db.DUPLICATE:
-            raise (wz.NotAcceptable("User name already exists."))
-        else:
-            return f"{username} added."
-
-
-@api.route('/users/delete/<username>')
-class DeleteUser(Resource):
-    """
-    This endpoint removes an existed user from the list of all the users.
-    """
-
-    @api.response(HTTPStatus.OK, 'Success')
-    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
-    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def post(self, username):
-        """
-        This method removes an existed user from the list of all users.
-        """
-        ret = db.del_user(username)
-        if ret == db.NOT_FOUND:
-            raise (wz.NotFound("This user does not exist in the users list."))
-        else:
-            return f"{username} deleted."
-
-
-@api.route('/endpoints')
-class Endpoints(Resource):
-    """
-    This class will serve as live, fetchable documentation of what endpoints
-    are available in the system.
-    """
-
-    @api.response(HTTPStatus.OK, 'Success')
-    def get(self):
-        """
-        The `get()` method will return a list of available endpoints.
-        """
-        endpoints = sorted(rule.rule for rule in api.app.url_map.iter_rules())
-        return {"Available endpoints": endpoints}

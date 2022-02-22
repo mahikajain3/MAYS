@@ -71,6 +71,31 @@ def get_users():
     return dbc.fetch_all(USERS, USER_NM)
 
 
+def get_trainings():
+    """
+    A function to return a dictionary of all trainings.
+    """
+    # return read_collection(TRAININGS_COLLECTION)
+    return dbc.fetch_all(TRAININGS, TRAININGS_NM)
+
+
+def get_badges():
+    """
+    A function to return a dictionary of all badges.
+    """
+    # return read_collection(BADGES_COLLECTION)
+    return dbc.fetch_all(BADGES, BADGES_NM)
+
+
+def get_workshops():
+    """
+    A function to return a dictionary of all workshops.
+    """
+
+    # return read_collection(WORKSHOPS_COLLECTION)
+    return dbc.fetch_all(WORKSHOPS, WORKSHOPS_NM)
+
+
 def user_exists(username):
     """
     See if a user with username is in the db.
@@ -105,31 +130,6 @@ def training_exists(trainingname):
     """
     rec = dbc.fetch_one(TRAININGS, filters={TRAININGS_NM: trainingname})
     return rec is not None
-
-
-def get_trainings():
-    """
-    A function to return a dictionary of all trainings.
-    """
-    # return read_collection(TRAININGS_COLLECTION)
-    return dbc.fetch_all(TRAININGS, TRAININGS_NM)
-
-
-def get_badges():
-    """
-    A function to return a dictionary of all badges.
-    """
-    # return read_collection(BADGES_COLLECTION)
-    return dbc.fetch_all(BADGES, BADGES_NM)
-
-
-def get_workshops():
-    """
-    A function to return a dictionary of all workshops.
-    """
-
-    # return read_collection(WORKSHOPS_COLLECTION)
-    return dbc.fetch_all(WORKSHOPS, WORKSHOPS_NM)
 
 
 def add_user(username):
@@ -192,6 +192,20 @@ def del_workshop(workshopname):
     else:
         dbc.del_one(WORKSHOPS, filters={WORKSHOPS_NM: workshopname})
         return OK
+
+
+def update_user(oldusername, newusername):
+    """
+    Update old user name in db with new user name.
+    """
+    if not user_exists(oldusername):
+        return NOT_FOUND
+    elif user_exists(newusername):
+        return DUPLICATE
+    else:
+        dbc.update_one(USERS, filters={USER_NM: oldusername},
+                       updates={"$set": {USER_NM: newusername}})
+    return OK
 
 
 def update_training(oldtrainingname, newtrainingname):
