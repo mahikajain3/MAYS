@@ -185,7 +185,7 @@ class EndpointTestCase(TestCase):
         ut = ep.UpdateTrainings(Resource)
         old_training = new_entity_name("trainingtoupdate")
         new_training = new_entity_name("updatedtraining")
-        cr = ep.CreateUser(Resource)
+        cr = ep.CreateTrainings(Resource)
         cr.post(old_training)
 
         ret = ut.put(old_training, new_training)
