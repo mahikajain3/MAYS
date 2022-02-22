@@ -191,3 +191,14 @@ class EndpointTestCase(TestCase):
         ret = ut.put(old_training, new_training)
         trainings = db.get_trainings()
         self.assertIn(new_training, trainings)
+
+    def test_update_user(self):
+        uu = ep.UpdateUser(Resource)
+        old_user = new_entity_name("usertoupdate")
+        new_user = new_entity_name("updateduser")
+        cr = ep.CreateUser(Resource)
+        cr.post(old_user)
+
+        ret = uu.put(old_user, new_user)
+        users = db.get_users()
+        self.assertIn(new_user, users)
