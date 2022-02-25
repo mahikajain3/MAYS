@@ -202,3 +202,14 @@ class EndpointTestCase(TestCase):
         ret = uu.put(old_user, new_user)
         users = db.get_users()
         self.assertIn(new_user, users)
+
+    def test_update_badge(self):
+        update_b = ep.UpdateBadges(Resource)
+        old_b = new_entity_name("badgeupdate")
+        new_b = new_entity_name("updatedbadge")
+        cr = ep.CreateBadges(Resource)
+        cr.post(old_b)
+
+        ret = update_b.put(old_b, new_b)
+        badges = db.get_badges()
+        self.assertIn(new_b, badges)
