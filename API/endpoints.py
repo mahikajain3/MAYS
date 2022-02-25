@@ -161,6 +161,28 @@ class ListBadges(Resource):
             return badges
 
 
+@ns_badge.route('/update/<oldtrainingname>/<newtrainingname>')
+class UpdateBadges(Resource):
+    """
+    This endpoint allows the user to update a badge name.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def put(self, oldbadgename, newbadgename):
+        """
+        This method updates old badge name to new badge name.
+        """
+        ret = db.update_badge(oldbadgename, newbadgename)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("List of badges db not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("Badge name already exists."))
+        else:
+            return f"{oldbadgename} updated to {newbadgename}."
+
+
 @ns_training.route('/create/<trainingname>')
 class CreateTrainings(Resource):
     """
