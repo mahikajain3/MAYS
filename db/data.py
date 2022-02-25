@@ -234,5 +234,3 @@ def update_badge(oldbadgename, newbadgename):
         dbc.update_one(BADGES, filters={BADGES_NM: oldbadgename},
                        updates={"$set": {BADGES_NM: newbadgename}})
     return OK
-
-
