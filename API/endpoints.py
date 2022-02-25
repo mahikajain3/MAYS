@@ -161,7 +161,7 @@ class ListBadges(Resource):
             return badges
 
 
-@ns_badge.route('/update/<oldtrainingname>/<newtrainingname>')
+@ns_badge.route('/update/<oldbadgename>/<newbadgename>')
 class UpdateBadges(Resource):
     """
     This endpoint allows the user to update a badge name.
