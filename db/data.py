@@ -234,3 +234,17 @@ def update_badge(oldbadgename, newbadgename):
         dbc.update_one(BADGES, filters={BADGES_NM: oldbadgename},
                        updates={"$set": {BADGES_NM: newbadgename}})
     return OK
+
+
+def update_workshop(oldwsname, newwsname):
+    """
+    Update old training name in db with new training name.
+    """
+    if not workshop_exists(oldwsname):
+        return NOT_FOUND
+    elif workshop_exists(newwsname):
+        return DUPLICATE
+    else:
+        dbc.update_one(WORKSHOPS, filters={WORKSHOPS_NM: oldwsname},
+                       updates={"$set": {WORKSHOPS_NM: newwsname}})
+    return OK

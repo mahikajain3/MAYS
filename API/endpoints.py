@@ -94,7 +94,7 @@ class UpdateUser(Resource):
         """
         ret = db.update_user(oldusername, newusername)
         if ret == db.NOT_FOUND:
-            raise (wz.NotFound("List of users db not found."))
+            raise (wz.NotFound("User not found."))
         elif ret == db.DUPLICATE:
             raise (wz.NotAcceptable("User name already exists."))
         else:
@@ -176,7 +176,7 @@ class UpdateBadges(Resource):
         """
         ret = db.update_badge(oldbadgename, newbadgename)
         if ret == db.NOT_FOUND:
-            raise (wz.NotFound("List of badges db not found."))
+            raise (wz.NotFound("Badge not found."))
         elif ret == db.DUPLICATE:
             raise (wz.NotAcceptable("Badge name already exists."))
         else:
@@ -238,7 +238,7 @@ class UpdateTrainings(Resource):
         """
         ret = db.update_training(oldtrainingname, newtrainingname)
         if ret == db.NOT_FOUND:
-            raise (wz.NotFound("List of trainings db not found."))
+            raise (wz.NotFound("Training not found."))
         elif ret == db.DUPLICATE:
             raise (wz.NotAcceptable("Training name already exists."))
         else:
@@ -284,6 +284,28 @@ class ListWorkshops(Resource):
             raise (wz.NotFound("List of workshops db not found."))
         else:
             return workshops
+
+
+@ns_workshop.route('/update/<oldwsname>/<newwsname>')
+class UpdateWorkshops(Resource):
+    """
+    This endpoint allows the user to update a badge name.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def put(self, oldwsname, newwsname):
+        """
+        This method updates old workshop name to new workshop name.
+        """
+        ret = db.update_workshop(oldwsname, newwsname)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("Workshop not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("Workshop name already exists."))
+        else:
+            return f"{oldwsname} updated to {newwsname}."
 
 
 @ns_workshop.route('/delete/<workshopname>')
