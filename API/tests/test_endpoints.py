@@ -202,6 +202,7 @@ class EndpointTestCase(TestCase):
         ret = uu.put(old_user, new_user)
         users = db.get_users()
         self.assertIn(new_user, users)
+        self.assertNotIn(old_user, users)
 
     def test_update_badge(self):
         update_b = ep.UpdateBadges(Resource)
@@ -213,3 +214,17 @@ class EndpointTestCase(TestCase):
         ret = update_b.put(old_b, new_b)
         badges = db.get_badges()
         self.assertIn(new_b, badges)
+        self.assertNotIn(old_b, badges)
+
+
+    def test_update_workshop(self):
+        update_ws = ep.UpdateWorkshops(Resource)
+        old_ws = new_entity_name("workshopupdate")
+        new_ws = new_entity_name("updatedworkshop")
+        cr = ep.CreateWorkshops(Resource)
+        cr.post(old_ws)
+
+        ret = update_ws.put(old_ws, new_ws)
+        workshops = db.get_workshops()
+        self.assertIn(new_ws, workshops)
+        self.assertNotIn(old_ws, workshops)
