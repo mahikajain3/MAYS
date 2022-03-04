@@ -5,13 +5,13 @@ The endpoint called `endpoints` will return all available endpoints.
 
 from http import HTTPStatus
 from flask import Flask
-# from flask_cors import CORS
+from flask_cors import CORS
 from flask_restx import Resource, Api
 import werkzeug.exceptions as wz
 import db.data as db
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 api = Api(app)
 
 ns_user = api.namespace('users', description='user related endpoints')
@@ -245,6 +245,26 @@ class UpdateTrainings(Resource):
             return f"{oldtrainingname} updated to {newtrainingname}."
 
 
+@ns_training.route('/delete/<trainingname>')
+class DeleteTraining(Resource):
+    """
+    This endpoint removes an existed training from the trainings.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def delete(self, trainingname):
+        """
+        This method removes an existed training from the list of all trainings.
+        """
+        ret = db.del_training(trainingname)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("Training does not exist."))
+        else:
+            return f"{trainingname} deleted."
+
+
 @ns_workshop.route('/create/<workshopname>')
 class CreateWorkshops(Resource):
     """
@@ -319,7 +339,7 @@ class DeleteWorkshop(Resource):
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
     def delete(self, workshopname):
         """
-        This method removes an existed user from the list of all users.
+        This method removes an existed workshop from the list of all workshops.
         """
         ret = db.del_workshop(workshopname)
         if ret == db.NOT_FOUND:

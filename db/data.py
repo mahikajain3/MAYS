@@ -194,6 +194,17 @@ def del_workshop(workshopname):
         return OK
 
 
+def del_training(trainingname):
+    """
+    Delete training from the db.
+    """
+    if not training_exists(trainingname):
+        return NOT_FOUND
+    else:
+        dbc.del_one(TRAININGS, filters={TRAININGS_NM: trainingname})
+        return OK
+
+
 def update_user(oldusername, newusername):
     """
     Update old user name in db with new user name.

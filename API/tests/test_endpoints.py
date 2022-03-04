@@ -180,6 +180,16 @@ class EndpointTestCase(TestCase):
         ret = de.delete(delete_user)
         users = db.get_users()
         self.assertNotIn(delete_user,users)
+    
+    def test_delete_training(self):
+        de = ep.DeleteTraining(Resource)
+        delete_training = new_entity_name("training")
+        cr = ep.CreateTrainings(Resource)
+        cr.post(delete_training)
+
+        ret = de.delete(delete_training)
+        trainings = db.get_trainings()
+        self.assertNotIn(delete_training,trainings)
 
     def test_update_training(self):
         ut = ep.UpdateTrainings(Resource)
