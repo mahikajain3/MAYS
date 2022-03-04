@@ -317,7 +317,7 @@ class DeleteWorkshop(Resource):
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def post(self, workshopname):
+    def delete(self, workshopname):
         """
         This method removes an existed user from the list of all users.
         """

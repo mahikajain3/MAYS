@@ -167,7 +167,7 @@ class EndpointTestCase(TestCase):
         cr = ep.CreateWorkshops(Resource)
         cr.post(delete_workshop)
 
-        ret = de.post(delete_workshop)
+        ret = de.delete(delete_workshop)
         workshops = db.get_workshops()
         self.assertNotIn(delete_workshop,workshops)
 
