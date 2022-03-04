@@ -177,7 +177,7 @@ class EndpointTestCase(TestCase):
         cr = ep.CreateUser(Resource)
         cr.post(delete_user)
 
-        ret = de.post(delete_user)
+        ret = de.delete(delete_user)
         users = db.get_users()
         self.assertNotIn(delete_user,users)
 

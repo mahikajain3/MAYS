@@ -5,13 +5,13 @@ The endpoint called `endpoints` will return all available endpoints.
 
 from http import HTTPStatus
 from flask import Flask
-from flask_cors import CORS
+# from flask_cors import CORS
 from flask_restx import Resource, Api
 import werkzeug.exceptions as wz
 import db.data as db
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 api = Api(app)
 
 ns_user = api.namespace('users', description='user related endpoints')
@@ -110,7 +110,7 @@ class DeleteUser(Resource):
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def post(self, username):
+    def delete(self, username):
         """
         This method removes an existed user from the list of all users.
         """
