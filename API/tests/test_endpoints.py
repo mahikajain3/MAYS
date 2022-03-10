@@ -191,6 +191,16 @@ class EndpointTestCase(TestCase):
         trainings = db.get_trainings()
         self.assertNotIn(delete_training,trainings)
 
+    def test_delete_badge(self):
+        de = ep.DeleteBadge(Resource)
+        delete_badge = new_entity_name("badge")
+        cr = ep.CreateBadges(Resource)
+        cr.post(delete_badge)
+
+        ret = de.delete(delete_badge)
+        badges = db.get_badges()
+        self.assertNotIn(delete_badge,badges)
+
     def test_update_training(self):
         ut = ep.UpdateTrainings(Resource)
         old_training = new_entity_name("trainingtoupdate")
