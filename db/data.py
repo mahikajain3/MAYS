@@ -259,3 +259,14 @@ def update_workshop(oldwsname, newwsname):
         dbc.update_one(WORKSHOPS, filters={WORKSHOPS_NM: oldwsname},
                        updates={"$set": {WORKSHOPS_NM: newwsname}})
     return OK
+
+
+def del_badge(badgename):
+    """
+    Delete badge from the db.
+    """
+    if not badge_exists(badgename):
+        return NOT_FOUND
+    else:
+        dbc.del_one(BADGES, filters={BADGES_NM: badgename})
+        return OK

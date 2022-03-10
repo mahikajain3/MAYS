@@ -183,6 +183,26 @@ class UpdateBadges(Resource):
             return f"{oldbadgename} updated to {newbadgename}."
 
 
+@ns_badge.route('/delete/<badgename>')
+class DeleteBadge(Resource):
+    """
+    This endpoint removes an existed badge.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def delete(self, badgename):
+        """
+        This method removes an existed badge from the list of all badges.
+        """
+        ret = db.del_badge(badgename)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("Badge does not exist."))
+        else:
+            return f"{badgename} deleted."
+
+
 @ns_training.route('/create/<trainingname>')
 class CreateTrainings(Resource):
     """
