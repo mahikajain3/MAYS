@@ -45,12 +45,12 @@ class Login(Resource):
     """
 
     @api.response(HTTPStatus.OK, 'Success')
-    def post(self):
+    def post(self, login, password):
         """
         Login to the site.
         """
-        if (request.form['username'] != 'admin' or
-                request.form['password'] != 'admin'):
+        if (request.form[login] != 'admin' or
+                request.form[password] != 'admin'):
             raise (wz.NotFound("Wrong username or password.\
                 Please try again."))
         else:
