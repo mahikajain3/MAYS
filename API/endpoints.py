@@ -49,8 +49,10 @@ class Login(Resource):
         """
         Login to the site.
         """
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            raise (wz.NotFound("Wrong username or password. Please try again."))
+        if (request.form['username'] != 'admin' or
+                request.form['password'] != 'admin'):
+            raise (wz.NotFound("Wrong username or password.\
+                Please try again."))
         else:
             return redirect(url_for('home'))
         return render_template('login.html')
