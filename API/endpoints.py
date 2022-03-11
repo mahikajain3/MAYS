@@ -38,7 +38,7 @@ class Endpoints(Resource):
         return {"Available endpoints": endpoints}
 
 
-@api.route('/login')
+@api.route('/login/<login>/<password>')
 class Login(Resource):
     """
     This endpoint is for the login.
