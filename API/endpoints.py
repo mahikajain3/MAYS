@@ -38,18 +38,18 @@ class Endpoints(Resource):
         return {"Available endpoints": endpoints}
 
 
-@api.route('/login/<login>/<password>')
+@api.route('/login/<username>/<password>')
 class Login(Resource):
     """
     This endpoint is for the login.
     """
 
     @api.response(HTTPStatus.OK, 'Success')
-    def post(self, login, password):
+    def post(self, username, password):
         """
         Login to the site.
         """
-        if (request.form[login] != 'admin' or
+        if (request.form[username] != 'admin' or
                 request.form[password] != 'admin'):
             raise (wz.NotFound("Wrong username or password.\
                 Please try again."))
