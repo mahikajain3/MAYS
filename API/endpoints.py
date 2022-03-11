@@ -4,7 +4,7 @@ The endpoint called `endpoints` will return all available endpoints.
 """
 
 from http import HTTPStatus
-from flask import Flask
+from flask import Flask, render_template, redirect, url_for, request
 from flask_cors import CORS
 from flask_restx import Resource, Api
 import werkzeug.exceptions as wz
@@ -36,6 +36,24 @@ class Endpoints(Resource):
         """
         endpoints = sorted(rule.rule for rule in api.app.url_map.iter_rules())
         return {"Available endpoints": endpoints}
+
+
+@api.route('/login')
+class Login(Resource):
+    """
+    This endpoint is for the login.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    def post(self):
+        """
+        Login to the site.
+        """
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            raise (wz.NotFound("Wrong username or password. Please try again."))
+        else:
+            return redirect(url_for('home'))
+        return render_template('login.html')
 
 
 @ns_user.route('/list')
