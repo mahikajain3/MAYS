@@ -5,13 +5,13 @@ The endpoint called `endpoints` will return all available endpoints.
 
 from http import HTTPStatus
 from flask import Flask
-from flask_cors import CORS
+# from flask_cors import CORS
 from flask_restx import Resource, Api
 import werkzeug.exceptions as wz
 import db.data as db
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 api = Api(app)
 
 ns_user = api.namespace('users', description='user related endpoints')
@@ -140,23 +140,31 @@ class DeleteUser(Resource):
             return f"{username} deleted."
 
 
-@ns_badge.route('/create/<badgename>')
+@ns_badge.route('/create/<badgename>',
+                defaults={'workshopname': None, 'trainingname': None})
+@ns_badge.route('/create/<badgename>/<workshopname>/<trainingname>')
 class CreateBadges(Resource):
     """
-    This endpoint adds a new training to the list of all the trainings.
+    This endpoint adds a new badge to the list of all the badges.
     """
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def post(self, badgename):
+    def post(self, badgename, workshopname, trainingname):
         """
-        This method adds a new user to the list of all users.
+        This method adds a new badge to the list of all badges.
         """
         ret = db.add_badge(badgename)
+
+        if not (db.workshop_exists(workshopname)):
+            db.add_workshop(workshopname)
+        if not (db.training_exists(trainingname)):
+            db.add_training(trainingname)
+
         if ret == db.NOT_FOUND:
-            raise (wz.NotFound("List of trainings db not found."))
+            raise (wz.NotFound("List of badges db not found."))
         elif ret == db.DUPLICATE:
-            raise (wz.NotAcceptable("Training name already exists."))
+            raise (wz.NotAcceptable("Badge name already exists."))
         else:
             return f"{badgename} added."
 

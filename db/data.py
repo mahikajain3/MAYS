@@ -154,13 +154,12 @@ def add_workshop(workshopname):
 
 def add_badge(badgename):
     """
-    Add a new workshop to the workshop database.
+    Add a new badge to the badge database.
     """
     if badge_exists(badgename):
         return DUPLICATE
     else:
         dbc.insert_doc(BADGES, {BADGES_NM: badgename})
-
 
 def add_training(trainingname):
     """
