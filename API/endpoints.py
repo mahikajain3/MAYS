@@ -190,7 +190,7 @@ class GetBadgesByID(Resource):
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     def get(self, badgename):
         """
-        Returns list of all badges.
+        This endpoint return info of a specific badge.
         """
         badges = db.get_badge_by_id(badgename)
         if badges is None:
