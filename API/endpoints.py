@@ -183,7 +183,7 @@ class ListBadges(Resource):
 @ns_badge.route('/list/<badgename>')
 class GetBadgesByID(Resource):
     """
-    This endpoint return a list of all the badges.
+    This endpoint return info of a specific badge.
     """
 
     @api.response(HTTPStatus.OK, 'Success')
