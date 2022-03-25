@@ -87,6 +87,15 @@ def get_badges():
     return dbc.fetch_all(BADGES, BADGES_NM)
 
 
+def get_badge_by_id(badgename):
+    """
+    See if a user with username is in the db.
+    Returns True or False
+    """
+    rec = dbc.fetch_one(BADGES, filters={BADGES_NM: badgename})
+    return rec
+
+
 def get_workshops():
     """
     A function to return a dictionary of all workshops.

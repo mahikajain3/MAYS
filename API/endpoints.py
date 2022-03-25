@@ -188,6 +188,25 @@ class ListBadges(Resource):
             return badges
 
 
+@ns_badge.route('/list/<badgename>')
+class GetBadgesByID(Resource):
+    """
+    This endpoint return info of a specific badge.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def get(self, badgename):
+        """
+        This endpoint return info of a specific badge.
+        """
+        badges = db.get_badge_by_id(badgename)
+        if badges is None:
+            raise (wz.NotFound("Badge does not exist."))
+        else:
+            return badges
+
+
 @ns_badge.route('/update/<oldbadgename>/<newbadgename>')
 class UpdateBadges(Resource):
     """
