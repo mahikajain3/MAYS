@@ -180,7 +180,7 @@ class ListBadges(Resource):
             return badges
 
 
-@ns_badge.route('/list')
+@ns_badge.route('/list/<badgename>')
 class GetBadgesByID(Resource):
     """
     This endpoint return a list of all the badges.
