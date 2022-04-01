@@ -18,7 +18,7 @@ BADGES = "badges"
 WORKSHOPS = "workshops"
 
 # field names in our DB:
-USER_NM = "userName"
+USERS_NM = "userName"
 TRAININGS_NM = "trainingName"
 BADGES_NM = "badgeName"
 WORKSHOPS_NM = "workshopName"
@@ -68,8 +68,14 @@ def get_users():
     """
     A function to return all users.
     """
-    return dbc.fetch_all(USERS, USER_NM)
+    return dbc.fetch_all(USERS, USERS_NM)
 
+def get_password(username):
+    """
+    A function to return password param of user.
+    """"
+    rec = dbc.fetch_one(USERS, filters={USERS_NM: username})
+    return (rec["password"])
 
 def get_trainings():
     """
@@ -110,7 +116,7 @@ def user_exists(username):
     See if a user with username is in the db.
     Returns True or False
     """
-    rec = dbc.fetch_one(USERS, filters={USER_NM: username})
+    rec = dbc.fetch_one(USERS, filters={USERS_NM: username})
     return rec is not None
 
 
@@ -148,7 +154,7 @@ def add_user(username):
     if user_exists(username):
         return DUPLICATE
     else:
-        dbc.insert_doc(USERS, {USER_NM: username})
+        dbc.insert_doc(USERS, {USERS_NM: username})
 
 
 def add_workshop(workshopname):
@@ -187,7 +193,7 @@ def del_user(username):
     if not user_exists(username):
         return NOT_FOUND
     else:
-        dbc.del_one(USERS, filters={USER_NM: username})
+        dbc.del_one(USERS, filters={USERS_NM: username})
         return OK
 
 
@@ -222,8 +228,8 @@ def update_user(oldusername, newusername):
     elif user_exists(newusername):
         return DUPLICATE
     else:
-        dbc.update_one(USERS, filters={USER_NM: oldusername},
-                       updates={"$set": {USER_NM: newusername}})
+        dbc.update_one(USERS, filters={USERS_NM: oldusername},
+                       updates={"$set": {USERS_NM: newusername}})
     return OK
 
 

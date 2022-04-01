@@ -49,12 +49,22 @@ class Login(Resource):
         """
         Login to the site.
         """
-        if (username != 'admin' or
+        if db.user_exists(username):
+            if password != db.get_password(username):
+                raise (wz.NotFound("Wrong password.\
+                    Please try again."))
+            else:
+                return "success."
+        else:
+            raise (wz.NotFound("Wrong username.\
+                Please try again."))
+
+        """ if (username != 'admin' or
                 password != 'admin'):
             raise (wz.NotFound("Wrong username or password.\
                 Please try again."))
         else:
-            return "success."
+            return "success." """
 
 
 @ns_user.route('/list')
@@ -140,12 +150,36 @@ class DeleteUser(Resource):
             return f"{username} deleted."
 
 
-@ns_badge.route('/create/<badgename>',
-                defaults={'workshopname': None, 'trainingname': None})
-@ns_badge.route('/create/<badgename>/<workshopname>/<trainingname>')
+@ns_badge.route('/create/<badgename>')
 class CreateBadges(Resource):
     """
     This endpoint adds a new badge to the list of all the badges.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
+    def post(self, badgename):
+        """
+        This method adds a new user to the list of all users.
+        """
+        ret = db.add_badge(badgename)
+        if ret == db.NOT_FOUND:
+            raise (wz.NotFound("List of trainings db not found."))
+        elif ret == db.DUPLICATE:
+            raise (wz.NotAcceptable("Training name already exists."))
+        else:
+            return f"{badgename} added."
+
+
+@ns_badge.route('/create/<badgename>/<workshopname>/<trainingname>')
+class CreateBadgesDescr(Resource):
+    """
+    This endpoint adds:
+    a new badge to the list of all the badges,
+    list of workshops to the list of all the workshops
+    (if it doesn't already exist),
+    list of trainings to the list of all the trainings
+    (if it doesn't already exist)
     """
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
@@ -155,11 +189,15 @@ class CreateBadges(Resource):
         This method adds a new badge to the list of all badges.
         """
         ret = db.add_badge(badgename)
+        list_workshops = [x.strip() for x in workshopname.split(",")]
+        list_trainings = [x.strip() for x in trainingname.split(",")]
 
-        if not (db.workshop_exists(workshopname)):
-            db.add_workshop(workshopname)
-        if not (db.training_exists(trainingname)):
-            db.add_training(trainingname)
+        for wkshp in list_workshops:
+            if not (db.workshop_exists(wkshp)):
+                db.add_workshop(wkshp)
+        for train in list_trainings:
+            if not (db.training_exists(train)):
+                db.add_training(train)
 
         if ret == db.NOT_FOUND:
             raise (wz.NotFound("List of badges db not found."))

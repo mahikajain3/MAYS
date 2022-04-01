@@ -53,7 +53,9 @@ class EndpointTestCase(TestCase):
         """
         cr = ep.CreateBadges(Resource)
         new_badge = new_entity_name("badge")
-        ret = cr.post(new_badge)
+        new_w = "w1"
+        new_t = "t1"
+        ret = cr.post(new_badge, new_w, new_t)
         badges = db.get_badges()
         self.assertIn(new_badge, badges)
 

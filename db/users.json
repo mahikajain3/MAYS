@@ -2,12 +2,14 @@
     "user1": {
         "first_name": "Test",
         "last_name": "User",
-        "net_id": "ab123"
+        "net_id": "ab123",
+        "password": "pass1"
     },
     "user2": {
         "first_name": "Mahika",
         "last_name": "Jain",
-        "net_id": "mj2249"
+        "net_id": "mj2249",
+        "password": "pass2"
     },
     "Aliah": {
         "num_users": 0
