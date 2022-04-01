@@ -251,10 +251,14 @@ class EndpointTestCase(TestCase):
         self.assertIn(new_ws, workshops)
         self.assertNotIn(old_ws, workshops)
     #
+    #
     # def test_get_badge_by_id(self):
     #     """
     #     Post-condition 1: return is a dictionary.
     #     """
-    #     lr = ep.GetBadgesByID(Resource)
-    #     ret = lr.get()
+    #     get_badge_by_id=ep.GetBadgesByID(Resource)
+    #     badgename=new_entity_name("uniquebadge")
+    #     cr=ep.CreateBadges(Resource)
+    #
+    #     ret = get_badge_by_id.get(badgename)
     #     self.assertIsInstance(ret, dict)

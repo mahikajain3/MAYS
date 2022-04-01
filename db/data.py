@@ -5,7 +5,8 @@ Gradually, we will fill in actual calls to our datastore.
 """
 
 import os
-# import json
+import json
+from bson import json_util
 
 import db.db_connect as dbc
 
@@ -59,9 +60,15 @@ DUPLICATE = 2
 #         print(f"{perm_version} not found.")
 #         return None
 client = dbc.get_client()
+
+
 if client is None:
     print("Failed to connect to MongoDB")
     exit(1)
+
+
+def parse_json(data):
+    return json.loads(json_util.dumps(data))
 
 
 def get_users():
@@ -99,7 +106,7 @@ def get_badge_by_id(badgename):
     Returns True or False
     """
     rec = dbc.fetch_one(BADGES, filters={BADGES_NM: badgename})
-    return rec
+    return parse_json(rec)
 
 
 def get_workshops():
