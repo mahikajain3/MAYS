@@ -160,13 +160,13 @@ class CreateBadges(Resource):
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
     def post(self, badgename):
         """
-        This method adds a new user to the list of all users.
+        This method adds a new user to the list of all badges.
         """
         ret = db.add_badge(badgename)
         if ret == db.NOT_FOUND:
-            raise (wz.NotFound("List of trainings db not found."))
+            raise (wz.NotFound("List of badges db not found."))
         elif ret == db.DUPLICATE:
-            raise (wz.NotAcceptable("Training name already exists."))
+            raise (wz.NotAcceptable("Badge name already exists."))
         else:
             return f"{badgename} added."
 

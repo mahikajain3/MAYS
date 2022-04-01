@@ -77,12 +77,15 @@ def get_users():
     """
     return dbc.fetch_all(USERS, USERS_NM)
 
+
 def get_password(username):
     """
     A function to return password param of user.
-    """"
+    """
     rec = dbc.fetch_one(USERS, filters={USERS_NM: username})
-    return (rec["password"])
+    data = parse_json(rec)
+    return data['password']
+
 
 def get_trainings():
     """
@@ -182,6 +185,7 @@ def add_badge(badgename):
         return DUPLICATE
     else:
         dbc.insert_doc(BADGES, {BADGES_NM: badgename})
+
 
 def add_training(trainingname):
     """

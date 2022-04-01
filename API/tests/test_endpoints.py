@@ -53,9 +53,7 @@ class EndpointTestCase(TestCase):
         """
         cr = ep.CreateBadges(Resource)
         new_badge = new_entity_name("badge")
-        new_w = "w1"
-        new_t = "t1"
-        ret = cr.post(new_badge, new_w, new_t)
+        ret = cr.post(new_badge)
         badges = db.get_badges()
         self.assertIn(new_badge, badges)
 
@@ -119,14 +117,14 @@ class EndpointTestCase(TestCase):
         ret = lr.get()
         self.assertIsInstance(ret, dict)
 
-    def test_list_trainings2(self):
-        """
-        Post-condition 2: keys to the dict are strings
-        """
-        lr = ep.ListTrainings(Resource)
-        ret = lr.get()
-        for key in ret:
-            self.assertIsInstance(key, str)
+    # def test_list_trainings2(self):
+    #     """
+    #     Post-condition 2: keys to the dict are strings
+    #     """
+    #     lr = ep.ListTrainings(Resource)
+    #     ret = lr.get()
+    #     for key in ret:
+    #         self.assertIsInstance(key, str)
 
     def test_list_trainings3(self):
         """
@@ -145,14 +143,14 @@ class EndpointTestCase(TestCase):
         ret = lr.get()
         self.assertIsInstance(ret, dict)
 
-    def test_list_workshops2(self):
-        """
-        Post-condition 2: keys to the dict are strings
-        """
-        lr = ep.ListWorkshops(Resource)
-        ret = lr.get()
-        for key in ret:
-            self.assertIsInstance(key, str)
+    # def test_list_workshops2(self):
+    #     """
+    #     Post-condition 2: keys to the dict are strings
+    #     """
+    #     lr = ep.ListWorkshops(Resource)
+    #     ret = lr.get()
+    #     for key in ret:
+    #         self.assertIsInstance(key, str)
 
     def test_list_workshops3(self):
         """
