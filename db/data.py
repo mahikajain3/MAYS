@@ -7,9 +7,6 @@ Gradually, we will fill in actual calls to our datastore.
 import os
 import json
 from bson import json_util
-from bson.py3compat import PY3 #1
-import collections.abc as ABC #2
-from abc import ABC, abstractmethod #3
 
 import db.db_connect as dbc
 

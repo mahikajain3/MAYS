@@ -3,5 +3,4 @@ flask-restx
 flask_cors
 gunicorn
 werkzeug
-bson
 pymongo[srv]
