@@ -23,7 +23,7 @@ USERS_NM = "userName"
 TRAININGS_NM = "trainingName"
 BADGES_NM = "badgeName"
 WORKSHOPS_NM = "workshopName"
-#PASSWORD = " password"
+# PASSWORD = " password"
 
 OK = 0
 NOT_FOUND = 1
