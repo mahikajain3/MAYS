@@ -23,6 +23,7 @@ USERS_NM = "userName"
 TRAININGS_NM = "trainingName"
 BADGES_NM = "badgeName"
 WORKSHOPS_NM = "workshopName"
+# PASSWORD = " password"
 
 OK = 0
 NOT_FOUND = 1
@@ -165,6 +166,16 @@ def add_user(username):
         return DUPLICATE
     else:
         dbc.insert_doc(USERS, {USERS_NM: username})
+
+
+# def add_user(username, password):
+#     """
+#     Add a new user to the user database.
+#     """
+#     if user_exists(username):
+#         return DUPLICATE
+#     else:
+#         dbc.insert_doc(USERS, {USERS_NM: username, PASSWORD: password})
 
 
 def add_workshop(workshopname):

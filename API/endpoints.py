@@ -5,13 +5,13 @@ The endpoint called `endpoints` will return all available endpoints.
 
 from http import HTTPStatus
 from flask import Flask
-# from flask_cors import CORS
+from flask_cors import CORS
 from flask_restx import Resource, Api, reqparse
 import werkzeug.exceptions as wz
 import db.data as db
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 api = Api(app)
 
 ns_user = api.namespace('users', description='user related endpoints')
