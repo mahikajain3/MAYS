@@ -6,7 +6,7 @@ The endpoint called `endpoints` will return all available endpoints.
 from http import HTTPStatus
 from flask import Flask
 # from flask_cors import CORS
-from flask_restx import Resource, Api
+from flask_restx import Resource, Api, reqparse
 import werkzeug.exceptions as wz
 import db.data as db
 
@@ -150,54 +150,46 @@ class DeleteUser(Resource):
             return f"{username} deleted."
 
 
+badge_parser = reqparse.RequestParser()
+# badge_parser.add_argument('description')
+badge_parser.add_argument('trainingname', action='split')
+badge_parser.add_argument('workshopname', action='split')
+
+
 @ns_badge.route('/create/<badgename>')
 class CreateBadges(Resource):
     """
-    This endpoint adds a new badge to the list of all the badges.
+    This endpoint adds:
+    a new badge to the list of all the badges,
+    workshops to the list of all the workshops
+    (if it doesn't already exist),
+    trainings to the list of all the trainings
+    (if it doesn't already exist)
     """
+    @api.doc(parser=badge_parser)
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
     def post(self, badgename):
         """
-        This method adds a new user to the list of all badges.
-        """
-        ret = db.add_badge(badgename)
-        if ret == db.NOT_FOUND:
-            raise (wz.NotFound("List of badges db not found."))
-        elif ret == db.DUPLICATE:
-            raise (wz.NotAcceptable("Badge name already exists."))
-        else:
-            return f"{badgename} added."
-
-
-@ns_badge.route('/create/<badgename>/<workshopname>/<trainingname>')
-class CreateBadgesDescr(Resource):
-    """
-    This endpoint adds:
-    a new badge to the list of all the badges,
-    list of workshops to the list of all the workshops
-    (if it doesn't already exist),
-    list of trainings to the list of all the trainings
-    (if it doesn't already exist)
-    """
-    @api.response(HTTPStatus.OK, 'Success')
-    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
-    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def post(self, badgename, workshopname, trainingname):
-        """
         This method adds a new badge to the list of all badges.
+        It has the option to add trainings, workshops as well.
+        Need to add descriptions. !!!!!
         """
+        args = badge_parser.parse_args()
+        # descr = args["description"]
+        traininglist = args["trainingname"]
+        workshoplist = args["workshopname"]
         ret = db.add_badge(badgename)
-        list_workshops = [x.strip() for x in workshopname.split(",")]
-        list_trainings = [x.strip() for x in trainingname.split(",")]
 
-        for wkshp in list_workshops:
-            if not (db.workshop_exists(wkshp)):
-                db.add_workshop(wkshp)
-        for train in list_trainings:
-            if not (db.training_exists(train)):
-                db.add_training(train)
+        if workshoplist:
+            for wkshp in workshoplist:
+                if not (db.workshop_exists(wkshp)):
+                    db.add_workshop(wkshp)
+        if traininglist:
+            for train in traininglist:
+                if not (db.training_exists(train)):
+                    db.add_training(train)
 
         if ret == db.NOT_FOUND:
             raise (wz.NotFound("List of badges db not found."))
@@ -245,26 +237,37 @@ class GetBadgesByID(Resource):
             return badges
 
 
+# badge_parser = reqparse.RequestParser()
+# badge_parser.add_argument('new_badgename', type=str, help='new_badgename')
+# badge_parser.add_argument('new_trainingname',
+# type=str, help='new_trainingname')
+# badge_parser.add_argument('new_workshopname',
+# type=str, help='new_workshopname')
+
+
 @ns_badge.route('/update/<oldbadgename>/<newbadgename>')
 class UpdateBadges(Resource):
     """
     This endpoint allows the user to update a badge name.
     """
 
+    # @api.doc(parser=badge_parser)
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def put(self, oldbadgename, newbadgename):
+    def put(self, old_badgename, new_badgename):
         """
         This method updates old badge name to new badge name.
         """
-        ret = db.update_badge(oldbadgename, newbadgename)
+        # args = badge_parser.parse_args()
+        # new_badgename = args['new_badgename']
+        ret = db.update_badge(old_badgename, new_badgename)
         if ret == db.NOT_FOUND:
             raise (wz.NotFound("Badge not found."))
         elif ret == db.DUPLICATE:
             raise (wz.NotAcceptable("Badge name already exists."))
         else:
-            return f"{oldbadgename} updated to {newbadgename}."
+            return f"{old_badgename} updated to {new_badgename}."
 
 
 @ns_badge.route('/delete/<badgename>')
