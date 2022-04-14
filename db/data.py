@@ -20,10 +20,15 @@ WORKSHOPS = "workshops"
 
 # field names in our DB:
 USERS_NM = "userName"
+# PASSWORD = " password"
+NETID = "netid"
+FIRST_NM = "firstName"
+LAST_NM = "lastName"
+BARCODE = "barcode"
+
 TRAININGS_NM = "trainingName"
 BADGES_NM = "badgeName"
 WORKSHOPS_NM = "workshopName"
-# PASSWORD = " password"
 
 OK = 0
 NOT_FOUND = 1
@@ -76,7 +81,7 @@ def get_users():
     """
     A function to return all users.
     """
-    return dbc.fetch_all(USERS, USERS_NM)
+    return dbc.fetch_all(USERS, NETID)
 
 
 def get_password(username):
@@ -158,14 +163,14 @@ def training_exists(trainingname):
     return rec is not None
 
 
-def add_user(username):
+def add_user(netid, firstname, lastname, barcode=999999999):
     """
     Add a new user to the user database.
     """
-    if user_exists(username):
+    if user_exists(netid):
         return DUPLICATE
     else:
-        dbc.insert_doc(USERS, {USERS_NM: username})
+        dbc.insert_doc(USERS, {NETID: netid, FIRST_NM: firstname, LAST_NM: lastname, BARCODE: barcode})
 
 
 # def add_user(username, password):

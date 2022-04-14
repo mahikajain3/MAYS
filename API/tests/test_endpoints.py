@@ -2,6 +2,7 @@
 This file holds the tests for endpoints.py.
 """
 
+from flask import Flask
 from unittest import TestCase, skip
 from flask_restx import Resource, Api
 
@@ -11,6 +12,7 @@ import random
 
 HUGE_NUM = 10000000000000
 
+app = Flask(__name__)
 
 def new_entity_name(entity_type):
     """
@@ -48,14 +50,12 @@ class EndpointTestCase(TestCase):
         self.assertIn(new_workshop, workshops)
 
     def test_create_badges(self):
-        """
-        Post-condition: return is a dictionary.
-        """
-        cr = ep.CreateBadges(Resource)
-        new_badge = new_entity_name("badge")
-        ret = cr.post(new_badge)
-        badges = db.get_badges()
-        self.assertIn(new_badge, badges)
+        with app.test_request_context('/create/<badgename>'):
+            cr = ep.CreateBadges(Resource)
+            new_badge = new_entity_name("badge")
+            ret = cr.post(new_badge)
+            badges = db.get_badges()
+        assert new_badge in badges
 
     def test_list_user1(self):
         """
@@ -225,16 +225,17 @@ class EndpointTestCase(TestCase):
         self.assertNotIn(old_user, users)
 
     def test_update_badge(self):
-        update_b = ep.UpdateBadges(Resource)
-        old_b = new_entity_name("badgeupdate")
-        new_b = new_entity_name("updatedbadge")
-        cr = ep.CreateBadges(Resource)
-        cr.post(old_b)
+        with app.test_request_context('/update/<oldbadgename>/<newbadgename>'):
+            update_b = ep.UpdateBadges(Resource)
+            old_b = new_entity_name("badgeupdate")
+            new_b = new_entity_name("updatedbadge")
+            cr = ep.CreateBadges(Resource)
+            cr.post(old_b)
 
-        ret = update_b.put(old_b, new_b)
-        badges = db.get_badges()
-        self.assertIn(new_b, badges)
-        self.assertNotIn(old_b, badges)
+            ret = update_b.put(old_b, new_b)
+            badges = db.get_badges()
+        assert new_b in badges
+        assert old_b not in badges
 
 
     def test_update_workshop(self):

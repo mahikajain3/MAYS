@@ -5,13 +5,13 @@ The endpoint called `endpoints` will return all available endpoints.
 
 from http import HTTPStatus
 from flask import Flask
-from flask_cors import CORS
+# from flask_cors import CORS
 from flask_restx import Resource, Api, reqparse
 import werkzeug.exceptions as wz
 import db.data as db
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 api = Api(app)
 
 ns_user = api.namespace('users', description='user related endpoints')
@@ -86,26 +86,36 @@ class ListUsers(Resource):
             return users
 
 
-@ns_user.route('/create/<username>')
+user_parser = reqparse.RequestParser()
+user_parser.add_argument('firstname')
+user_parser.add_argument('lastname')
+user_parser.add_argument('barcode')
+
+
+@ns_user.route('/create/<netid>')
 class CreateUser(Resource):
     """
     This endpoint adds a new user to the list of all the users.
     """
-
+    @api.doc(parser=user_parser)
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def post(self, username):
+    def post(self, netid):
         """
         This method adds a new user to the list of all users.
         """
-        ret = db.add_user(username)
+        args = user_parser.parse_args()
+        firstname = args['firstname']
+        lastname = args['lastname']
+        barcode = args['barcode']
+        ret = db.add_user(netid, firstname, lastname, barcode)
         if ret == db.NOT_FOUND:
             raise (wz.NotFound("List of users db not found."))
         elif ret == db.DUPLICATE:
             raise (wz.NotAcceptable("User name already exists."))
         else:
-            return f"{username} added."
+            return f"{netid} added."
 
 
 @ns_user.route('/update/<oldusername>/<newusername>')
