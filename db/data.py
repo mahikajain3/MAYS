@@ -28,6 +28,7 @@ BARCODE = "barcode"
 
 TRAININGS_NM = "trainingName"
 BADGES_NM = "badgeName"
+DESC = "description"
 WORKSHOPS_NM = "workshopName"
 
 OK = 0
@@ -103,15 +104,16 @@ def get_trainings():
 
 def get_badges():
     """
-    A function to return a dictionary of all badges.
+    A function to return a dictionary of all badgenames and their description.
     """
     # return read_collection(BADGES_COLLECTION)
-    return dbc.fetch_all(BADGES, BADGES_NM)
+    #return dbc.fetch_all(BADGES, BADGES_NM)
+    return dbc.fetch_all(BADGES, BADGES_NM, filters={})
 
 
 def get_badge_by_id(badgename):
     """
-    See if a user with username is in the db.
+    Get a specific badge by badgename from the db.
     Returns True or False
     """
     rec = dbc.fetch_one(BADGES, filters={BADGES_NM: badgename})
@@ -127,12 +129,12 @@ def get_workshops():
     return dbc.fetch_all(WORKSHOPS, WORKSHOPS_NM)
 
 
-def user_exists(username):
+def user_exists(netid):
     """
     See if a user with username is in the db.
     Returns True or False
     """
-    rec = dbc.fetch_one(USERS, filters={USERS_NM: username})
+    rec = dbc.fetch_one(USERS, filters={NETID: netid})
     return rec is not None
 
 
@@ -193,14 +195,14 @@ def add_workshop(workshopname):
         dbc.insert_doc(WORKSHOPS, {WORKSHOPS_NM: workshopname})
 
 
-def add_badge(badgename):
+def add_badge(badgename, desc):
     """
     Add a new badge to the badge database.
     """
     if badge_exists(badgename):
         return DUPLICATE
     else:
-        dbc.insert_doc(BADGES, {BADGES_NM: badgename})
+        dbc.insert_doc(BADGES, {BADGES_NM: badgename}, filters={DESC: desc})
 
 
 def add_training(trainingname):
@@ -276,7 +278,7 @@ def update_training(oldtrainingname, newtrainingname):
 
 def update_badge(oldbadgename, newbadgename):
     """
-    Update old training name in db with new training name.
+    Update old badge name in db with new badge name.
     """
     if not badge_exists(oldbadgename):
         return NOT_FOUND
@@ -285,6 +287,20 @@ def update_badge(oldbadgename, newbadgename):
     else:
         dbc.update_one(BADGES, filters={BADGES_NM: oldbadgename},
                        updates={"$set": {BADGES_NM: newbadgename}})
+    return OK
+
+
+def update_badge_desc(badgename, newbadgedesc):
+    """
+    Update old badge description in db with new badge description.
+    """
+    if not badge_exists(badgename):
+        return NOT_FOUND
+    elif badge_exists(badgename):
+        return DUPLICATE
+    else:
+        dbc.update_one(BADGES, filters={BADGES_NM: badgename},
+                       updates={"$set": {DESC: newbadgedesc}})
     return OK
 
 
@@ -309,5 +325,6 @@ def del_badge(badgename):
     if not badge_exists(badgename):
         return NOT_FOUND
     else:
+        # b, desc = get_badges()
         dbc.del_one(BADGES, filters={BADGES_NM: badgename})
         return OK

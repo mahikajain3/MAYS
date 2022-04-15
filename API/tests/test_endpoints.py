@@ -33,11 +33,12 @@ class EndpointTestCase(TestCase):
         """
         Post-condition: return is a dictionary.
         """
-        cr = ep.CreateUser(Resource)
-        new_user = new_entity_name("user")
-        ret = cr.post(new_user)
-        users = db.get_users()
-        self.assertIn(new_user, users)
+        with app.test_request_context('/create/<netid>'):
+            cr = ep.CreateUser(Resource)
+            new_user = new_entity_name("user")
+            ret = cr.post(new_user)
+            users = db.get_users()
+        assert new_user in users
 
     def test_create_workshops(self):
         """
@@ -172,14 +173,15 @@ class EndpointTestCase(TestCase):
         self.assertNotIn(delete_workshop,workshops)
 
     def test_delete_user(self):
-        de = ep.DeleteUser(Resource)
-        delete_user = new_entity_name("user")
-        cr = ep.CreateUser(Resource)
-        cr.post(delete_user)
+        with app.test_request_context('/delete/<username>'):
+            de = ep.DeleteUser(Resource)
+            delete_user = new_entity_name("user")
+            cr = ep.CreateUser(Resource)
+            cr.post(delete_user)
 
-        ret = de.delete(delete_user)
-        users = db.get_users()
-        self.assertNotIn(delete_user,users)
+            ret = de.delete(delete_user)
+            users = db.get_users()
+        assert delete_user not in users
     
     def test_delete_training(self):
         de = ep.DeleteTraining(Resource)
@@ -192,14 +194,15 @@ class EndpointTestCase(TestCase):
         self.assertNotIn(delete_training,trainings)
 
     def test_delete_badge(self):
-        de = ep.DeleteBadge(Resource)
-        delete_badge = new_entity_name("badge")
-        cr = ep.CreateBadges(Resource)
-        cr.post(delete_badge)
+        with app.test_request_context('/delete/<badgename>'):
+            de = ep.DeleteBadge(Resource)
+            delete_badge = new_entity_name("badge")
+            cr = ep.CreateBadges(Resource)
+            cr.post(delete_badge)
 
-        ret = de.delete(delete_badge)
-        badges = db.get_badges()
-        self.assertNotIn(delete_badge,badges)
+            ret = de.delete(delete_badge)
+            badges = db.get_badges()
+        assert delete_badge not in badges
 
     def test_update_training(self):
         ut = ep.UpdateTrainings(Resource)
@@ -225,18 +228,32 @@ class EndpointTestCase(TestCase):
         self.assertNotIn(old_user, users)
 
     def test_update_badge(self):
-        with app.test_request_context('/update/<oldbadgename>/<newbadgename>'):
+        with app.test_request_context('/update/<oldbadgename>/<newbadgename>/<newdescription>'):
             update_b = ep.UpdateBadges(Resource)
             old_b = new_entity_name("badgeupdate")
             new_b = new_entity_name("updatedbadge")
+            new_d = new_entity_name("")
             cr = ep.CreateBadges(Resource)
             cr.post(old_b)
 
-            ret = update_b.put(old_b, new_b)
+            ret = update_b.put(old_b, new_b, new_d)
             badges = db.get_badges()
         assert new_b in badges
         assert old_b not in badges
 
+    def test_update_badge_desc(self):
+        with app.test_request_context('/update/<oldbadgename>/<newbadgename>/<newdescription>'):
+            update_b = ep.UpdateBadges(Resource)
+            old_b = new_entity_name("badgeupdate")
+            new_b = new_entity_name("updatedbadge")
+            new_d = new_entity_name("newdesc")
+            cr = ep.CreateBadges(Resource)
+            cr.post(old_b)
+
+            ret = update_b.put(old_b, new_b, new_d)
+            badges = db.get_badges()
+        assert new_b in badges
+        assert old_b not in badges
 
     def test_update_workshop(self):
         update_ws = ep.UpdateWorkshops(Resource)
@@ -255,10 +272,11 @@ class EndpointTestCase(TestCase):
         """
         Post-condition 1: return is a dictionary.
         """
-        get_badge_by_id=ep.GetBadgesByID(Resource)
-        badgename=new_entity_name("uniquebadge")
-        cr=ep.CreateBadges(Resource)
-        cr.post(badgename)
+        with app.test_request_context('/list/<badgename>'):
+            get_badge_by_id = ep.GetBadgesByID(Resource)
+            badgename = new_entity_name("uniquebadge")
+            cr = ep.CreateBadges(Resource)
+            cr.post(badgename)
 
-        ret = get_badge_by_id.get(badgename)
-        self.assertIsInstance(ret, dict)
+            ret = get_badge_by_id.get(badgename)
+        assert type(ret) == dict

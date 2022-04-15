@@ -63,12 +63,14 @@ def del_one(collect_nm, filters={}):
     return client[db_nm][collect_nm].delete_one(filters)
 
 
-def fetch_all(collect_nm, key_nm):
+def fetch_all(collect_nm, key_nm, filters={}):
     all_docs = {}
-    for doc in client[db_nm][collect_nm].find():
+    for doc in client[db_nm][collect_nm].find(filters):
+        # print(all_docs['netid'])
+        # print(doc)
         all_docs[doc[key_nm]] = json.loads(bsutil.dumps(doc))
     return all_docs
 
 
-def insert_doc(collect_nm, doc):
-    client[db_nm][collect_nm].insert_one(doc)
+def insert_doc(collect_nm, doc, filters={}):
+    client[db_nm][collect_nm].insert_one(doc, filters)

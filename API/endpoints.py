@@ -161,7 +161,7 @@ class DeleteUser(Resource):
 
 
 badge_parser = reqparse.RequestParser()
-# badge_parser.add_argument('description')
+badge_parser.add_argument('description')
 badge_parser.add_argument('trainingname', action='split')
 badge_parser.add_argument('workshopname', action='split')
 
@@ -187,10 +187,10 @@ class CreateBadges(Resource):
         Need to add descriptions. !!!!!
         """
         args = badge_parser.parse_args()
-        # descr = args["description"]
+        desc = args["description"]
         traininglist = args["trainingname"]
         workshoplist = args["workshopname"]
-        ret = db.add_badge(badgename)
+        ret = db.add_badge(badgename, desc)
 
         if workshoplist:
             for wkshp in workshoplist:
@@ -255,7 +255,7 @@ class GetBadgesByID(Resource):
 # type=str, help='new_workshopname')
 
 
-@ns_badge.route('/update/<oldbadgename>/<newbadgename>')
+@ns_badge.route('/update/<oldbadgename>/<newbadgename>/<newdescription>')
 class UpdateBadges(Resource):
     """
     This endpoint allows the user to update a badge name.
@@ -265,9 +265,10 @@ class UpdateBadges(Resource):
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def put(self, old_badgename, new_badgename):
+    def put(self, old_badgename, new_badgename, desc):
         """
-        This method updates old badge name to new badge name.
+        This method updates old badge name to new
+        badge name and new description.
         """
         # args = badge_parser.parse_args()
         # new_badgename = args['new_badgename']
@@ -276,6 +277,8 @@ class UpdateBadges(Resource):
             raise (wz.NotFound("Badge not found."))
         elif ret == db.DUPLICATE:
             raise (wz.NotAcceptable("Badge name already exists."))
+        elif len(desc) != 0:
+            db.update_badge_desc(new_badgename, desc)
         else:
             return f"{old_badgename} updated to {new_badgename}."
 

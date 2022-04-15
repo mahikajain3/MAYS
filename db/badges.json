@@ -1,13 +1,13 @@
 {
   "badge1": {
-    "owner": "Sarah",
-    "qualification_for": "3D Printer",
-    "net_id": "ab123"
+    "desc": "this describes this badge",
+    "trainingname": ["t1", "t2", "t3"], 
+    "workshopname": ["w1", "w2", "w3"]
   },
   "badge2": {
-    "owner": "Sarah",
-    "qualification_for": "MakerSpace",
-    "net_id": "mj2249"
+    "desc": "this describes this badge2",
+    "trainingname": ["t12", "t22", "t32"], 
+    "workshopname": ["w12", "w22", "w32"]
   },
   "Aliah": {
     "num_users": 0

@@ -1,15 +1,15 @@
 {
     "user1": {
-        "first_name": "Test",
-        "last_name": "User",
-        "net_id": "ab123",
+        "firstname": "Test",
+        "lastname": "User",
+        "netid": "ab123",
         "barcode": 999999,
         "password": "pass1"
     },
     "user2": {
-        "first_name": "Mahika",
-        "last_name": "Jain",
-        "net_id": "mj2249",
+        "firstname": "Mahika",
+        "lastname": "Jain",
+        "netid": "mj2249",
         "barcode": 999999,
         "password": "pass2"
     },
