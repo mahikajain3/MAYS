@@ -281,3 +281,17 @@ class EndpointTestCase(TestCase):
 
             ret = get_badge_by_id.get(badgename)
         assert type(ret) == dict
+
+
+    def test_get_user_by_id(self):
+        """
+        Post-condition 1: return is a dictionary.
+        """
+        with app.test_request_context('/list/<username>'):
+            get_user_by_id = ep.GetUsersByID(Resource)
+            username = new_entity_name("uniqueuser")
+            cr = ep.CreateUser(Resource)
+            cr.post(username)
+
+            ret = get_user_by_id.get(username)
+        assert type(ret) == dict

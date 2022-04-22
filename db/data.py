@@ -85,6 +85,15 @@ def get_users():
     return dbc.fetch_all(USERS, NETID)
 
 
+def get_user_by_id(username):
+    """
+    Get a specific user by username from the db.
+    Returns True or False
+    """
+    rec = dbc.fetch_one(USERS, filters={NETID: username})
+    return parse_json(rec)
+
+
 def get_password(username):
     """
     A function to return password param of user.
@@ -131,7 +140,7 @@ def get_workshops():
 
 def netid_exists(netid):
     """
-    See if a user with username is in the db.
+    See if a user with netid is in the db.
     Returns True or False
     """
     rec = dbc.fetch_one(USERS, filters={NETID: netid})

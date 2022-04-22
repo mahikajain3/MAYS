@@ -118,6 +118,25 @@ class CreateUser(Resource):
             return f"{netid} added."
 
 
+@ns_user.route('/list/<username>')
+class GetUsersByID(Resource):
+    """
+    This endpoint return info of a specific user.
+    """
+
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def get(self, username):
+        """
+        This endpoint return info of a specific user.
+        """
+        users = db.get_user_by_id(username)
+        if users is None:
+            raise (wz.NotFound("User does not exist."))
+        else:
+            return users
+
+
 @ns_user.route('/update/<oldnetid>/<newnetid>')
 class UpdateUser(Resource):
     """
