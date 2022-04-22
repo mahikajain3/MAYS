@@ -216,16 +216,17 @@ class EndpointTestCase(TestCase):
         self.assertIn(new_training, trainings)
 
     def test_update_user(self):
-        uu = ep.UpdateUser(Resource)
-        old_user = new_entity_name("usertoupdate")
-        new_user = new_entity_name("updateduser")
-        cr = ep.CreateUser(Resource)
-        cr.post(old_user)
+        with app.test_request_context('/update/<oldnetid>/<newnetid>'):
+            uu = ep.UpdateUser(Resource)
+            old_user = new_entity_name("usertoupdate")
+            new_user = new_entity_name("updateduser")
+            cr = ep.CreateUser(Resource)
+            cr.post(old_user)
 
-        ret = uu.put(old_user, new_user)
-        users = db.get_users()
-        self.assertIn(new_user, users)
-        self.assertNotIn(old_user, users)
+            ret = uu.put(old_user, new_user)
+            users = db.get_users()
+        assert new_user in users
+        assert old_user not in users
 
     def test_update_badge(self):
         with app.test_request_context('/update/<oldbadgename>/<newbadgename>/<newdescription>'):

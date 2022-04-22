@@ -49,7 +49,7 @@ class Login(Resource):
         """
         Login to the site.
         """
-        if db.user_exists(username):
+        if db.netid_exists(username):
             if password != db.get_password(username):
                 raise (wz.NotFound("Wrong password.\
                     Please try again."))
@@ -118,7 +118,7 @@ class CreateUser(Resource):
             return f"{netid} added."
 
 
-@ns_user.route('/update/<oldusername>/<newusername>')
+@ns_user.route('/update/<oldnetid>/<newnetid>')
 class UpdateUser(Resource):
     """
     This endpoint allows the user to update a user name.
@@ -127,17 +127,17 @@ class UpdateUser(Resource):
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def put(self, oldusername, newusername):
+    def put(self, oldnetid, newnetid):
         """
         This method updates old user name to new user name.
         """
-        ret = db.update_user(oldusername, newusername)
+        ret = db.update_user(oldnetid, newnetid)
         if ret == db.NOT_FOUND:
             raise (wz.NotFound("User not found."))
         elif ret == db.DUPLICATE:
             raise (wz.NotAcceptable("User name already exists."))
         else:
-            return f"{oldusername} updated to {newusername}."
+            return f"{oldnetid} updated to {newnetid}."
 
 
 @ns_user.route('/delete/<username>')

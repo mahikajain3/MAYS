@@ -107,7 +107,7 @@ def get_badges():
     A function to return a dictionary of all badgenames and their description.
     """
     # return read_collection(BADGES_COLLECTION)
-    #return dbc.fetch_all(BADGES, BADGES_NM)
+    # return dbc.fetch_all(BADGES, BADGES_NM)
     return dbc.fetch_all(BADGES, BADGES_NM, filters={})
 
 
@@ -129,7 +129,7 @@ def get_workshops():
     return dbc.fetch_all(WORKSHOPS, WORKSHOPS_NM)
 
 
-def user_exists(netid):
+def netid_exists(netid):
     """
     See if a user with username is in the db.
     Returns True or False
@@ -169,17 +169,18 @@ def add_user(netid, firstname, lastname, barcode=999999999):
     """
     Add a new user to the user database.
     """
-    if user_exists(netid):
+    if netid_exists(netid):
         return DUPLICATE
     else:
-        dbc.insert_doc(USERS, {NETID: netid, FIRST_NM: firstname, LAST_NM: lastname, BARCODE: barcode})
+        dbc.insert_doc(USERS, {NETID: netid, FIRST_NM: firstname,
+                       LAST_NM: lastname, BARCODE: barcode})
 
 
 # def add_user(username, password):
 #     """
 #     Add a new user to the user database.
 #     """
-#     if user_exists(username):
+#     if netid_exists(username):
 #         return DUPLICATE
 #     else:
 #         dbc.insert_doc(USERS, {USERS_NM: username, PASSWORD: password})
@@ -215,14 +216,14 @@ def add_training(trainingname):
         dbc.insert_doc(TRAININGS, {TRAININGS_NM: trainingname})
 
 
-def del_user(username):
+def del_user(netid):
     """
     Delete username from the db.
     """
-    if not user_exists(username):
+    if not netid_exists(netid):
         return NOT_FOUND
     else:
-        dbc.del_one(USERS, filters={USERS_NM: username})
+        dbc.del_one(USERS, filters={NETID: netid})
         return OK
 
 
@@ -248,17 +249,17 @@ def del_training(trainingname):
         return OK
 
 
-def update_user(oldusername, newusername):
+def update_user(oldnetid, newnetid):
     """
     Update old user name in db with new user name.
     """
-    if not user_exists(oldusername):
+    if not netid_exists(oldnetid):
         return NOT_FOUND
-    elif user_exists(newusername):
+    elif netid_exists(newnetid):
         return DUPLICATE
     else:
-        dbc.update_one(USERS, filters={USERS_NM: oldusername},
-                       updates={"$set": {USERS_NM: newusername}})
+        dbc.update_one(USERS, filters={NETID: oldnetid},
+                       updates={"$set": {NETID: newnetid}})
     return OK
 
 
