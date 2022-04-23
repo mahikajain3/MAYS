@@ -12,7 +12,8 @@ FORCE:
 tests: lint unit
 
 unit: FORCE
-	$(TESTFINDER) --with-coverage
+	echo $(PKG)
+	$(TESTFINDER) --with-coverage --coverage $(PKG)
 
 lint: FORCE
 	$(LINTER) *.py
