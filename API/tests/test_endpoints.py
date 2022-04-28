@@ -190,15 +190,11 @@ class EndpointTestCase(TestCase):
         self.assertNotIn(delete_training,trainings)
 
     def test_delete_badge(self):
-        with app.test_request_context('/delete/<badgename>'):
-            de = ep.DeleteBadge(Resource)
-            delete_badge = new_entity_name("badge")
-            cr = ep.CreateBadges(Resource)
-            cr.post(delete_badge)
-
-            ret = de.delete(delete_badge)
-            badges = db.get_badges()
-        assert delete_badge not in badges
+        badge_fields = {'trainingname': ['trainingtest']}
+        badge_nm = new_entity_name('badge')
+        test = ep.app.test_client().post(f'/badges/create/{badge_nm}', json=badge_fields)
+        response = ep.app.test_client().delete(f'/badges/delete/{badge_nm}', json=badge_fields)
+        self.assertEqual(response.status_code, 200)
 
     def test_update_training(self):
         ut = ep.UpdateTrainings(Resource)
