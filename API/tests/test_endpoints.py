@@ -169,15 +169,11 @@ class EndpointTestCase(TestCase):
         self.assertNotIn(delete_workshop,workshops)
 
     def test_delete_user(self):
-        with app.test_request_context('/delete/<username>'):
-            de = ep.DeleteUser(Resource)
-            delete_user = new_entity_name("user")
-            cr = ep.CreateUser(Resource)
-            cr.post(delete_user)
-
-            ret = de.delete(delete_user)
-            users = db.get_users()
-        assert delete_user not in users
+        user_fields = {'firstname': ['firstname_test']}
+        netid = new_entity_name('abc')
+        test = ep.app.test_client().post(f'/users/create/{netid}', json=user_fields)
+        response = ep.app.test_client().delete(f'/users/delete/{netid}', json=user_fields)
+        self.assertEqual(response.status_code, 200)
     
     def test_delete_training(self):
         de = ep.DeleteTraining(Resource)
