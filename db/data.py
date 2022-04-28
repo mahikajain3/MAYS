@@ -194,19 +194,20 @@ def add_user(netid, firstname, lastname, barcode=999999999):
 #     else:
 #         dbc.insert_doc(USERS, {USERS_NM: username, PASSWORD: password})
 
-# def add_user2(netid,firstname, lastname, password, barcode=999999999):
-#     """
-#     Add a new user to the user database.
-#     """
-#     if netid_exists(netid):
-#         return DUPLICATE
-#     else:
-#         salt = utils.gen_salt()
-#         hashed = utils.hash_pw(salt,password)
-#         dbc.insert_doc(USERS, {NETID: netid, FIRST_NM: firstname,
-#                        LAST_NM: lastname, BARCODE: barcode,
-#                        PASSWORD: hashed})
-#         # for now netid is all 0
+
+def add_user2(netid, firstname, lastname, password, barcode=999999999):
+    """
+    Add a new user to the user database.
+    """
+    if netid_exists(netid):
+        return DUPLICATE
+    else:
+        # salt = utils.gen_salt()
+        # hashed = utils.hash_pw(salt,password)
+        dbc.insert_doc(USERS, {NETID: netid, FIRST_NM: firstname,
+                       LAST_NM: lastname, BARCODE: barcode})
+        #              PASSWORD: hashed})
+        # for now netid is all 0
 
 
 def add_workshop(workshopname):
