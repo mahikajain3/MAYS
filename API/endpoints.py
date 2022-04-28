@@ -110,6 +110,7 @@ class CreateUser(Resource):
         lastname = args['lastname']
         barcode = args['barcode']
         ret = db.add_user(netid, firstname, lastname, barcode)
+        # ret = db.add_user2(netid, firstname, lastname, password, barcode)
         if ret == db.NOT_FOUND:
             raise (wz.NotFound("List of users db not found."))
         elif ret == db.DUPLICATE:

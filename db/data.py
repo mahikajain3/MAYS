@@ -7,7 +7,7 @@ Gradually, we will fill in actual calls to our datastore.
 import os
 import json
 from bson import json_util
-
+import utils
 import db.db_connect as dbc
 
 MAYS_HOME = os.environ["MAYS_HOME"]
@@ -20,7 +20,7 @@ WORKSHOPS = "workshops"
 
 # field names in our DB:
 USERS_NM = "userName"
-# PASSWORD = " password"
+PASSWORD = " password"
 NETID = "netid"
 FIRST_NM = "firstName"
 LAST_NM = "lastName"
@@ -194,6 +194,18 @@ def add_user(netid, firstname, lastname, barcode=999999999):
 #     else:
 #         dbc.insert_doc(USERS, {USERS_NM: username, PASSWORD: password})
 
+def add_user2(netid,firstname, lastname, password, barcode=999999999,):
+    """
+    Add a new user to the user database.
+    """
+    if netid_exists(netid):
+        return DUPLICATE
+    else:
+        salt = utils.gen_salt()
+        hashed = utils.hash_pw(salt,password)
+        dbc.insert_doc(USERS, {NETID: netid, FIRST_NM: firstname,
+                       LAST_NM: lastname, BARCODE: barcode, PASSWORD: hashed})
+        # for now netid is all 0
 
 def add_workshop(workshopname):
     """
