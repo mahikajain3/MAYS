@@ -33,12 +33,10 @@ class EndpointTestCase(TestCase):
         """
         Post-condition: return is a dictionary.
         """
-        with app.test_request_context('/create/<netid>'):
-            cr = ep.CreateUser(Resource)
-            new_user = new_entity_name("user")
-            ret = cr.post(new_user)
-            users = db.get_users()
-        assert new_user in users
+        user_fields = {'firstname': ['firstname_test']}
+        netid = new_entity_name('abc')
+        response = ep.app.test_client().post(f'/users/create/{netid}', json=user_fields)
+        self.assertEqual(response.status_code, 200)
 
     def test_create_workshops(self):
         """
@@ -51,12 +49,6 @@ class EndpointTestCase(TestCase):
         self.assertIn(new_workshop, workshops)
 
     def test_create_badges(self):
-        # with app.test_request_context('/create/<badgename>'):
-        #     cr = ep.CreateBadges(Resource)
-        #     new_badge = new_entity_name("badge")
-        #     ret = cr.post(new_badge, json={})
-        #     badges = db.get_badges()
-        # assert new_badge in badges
         badge_fields = {'trainingname': ['trainingtest']}
         badge_nm = new_entity_name('badge')
         response = ep.app.test_client().post(f'/badges/create/{badge_nm}', json=badge_fields)
