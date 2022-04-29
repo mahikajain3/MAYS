@@ -212,18 +212,24 @@ class EndpointTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_update_badge(self):
-        with app.test_request_context('/update/<oldbadgename>/<newbadgename>/<newdescription>'):
-            update_b = ep.UpdateBadges(Resource)
-            old_b = new_entity_name("badgeupdate")
-            new_b = new_entity_name("updatedbadge")
-            new_d = new_entity_name("")
-            cr = ep.CreateBadges(Resource)
-            cr.post(old_b)
+        # with app.test_request_context('/update/<oldbadgename>/<newbadgename>/<newdescription>'):
+        #     update_b = ep.UpdateBadges(Resource)
+        #     old_b = new_entity_name("badgeupdate")
+        #     new_b = new_entity_name("updatedbadge")
+        #     new_d = new_entity_name("")
+        #     cr = ep.CreateBadges(Resource)
+        #     cr.post(old_b)
 
-            ret = update_b.put(old_b, new_b, new_d)
-            badges = db.get_badges()
-        assert new_b in badges
-        assert old_b not in badges
+        #     ret = update_b.put(old_b, new_b, new_d)
+        #     badges = db.get_badges()
+        # assert new_b in badges
+        # assert old_b not in badges
+        badge_fields = {'trainingname': ['trainingtest']}
+        old_badge_nm = new_entity_name('badge')
+        new_badge_nm = new_entity_name('badge')
+        test = ep.app.test_client().post(f'/badges/create/{old_badge_nm}', json=badge_fields)
+        response = ep.app.test_client().put(f'/badges/update/{old_badge_nm}/{new_badge_nm}')
+        self.assertEqual(response.status_code, 200)
 
     def test_update_badge_desc(self):
         with app.test_request_context('/update/<oldbadgename>/<newbadgename>/<newdescription>'):
@@ -238,7 +244,7 @@ class EndpointTestCase(TestCase):
             badges = db.get_badges()
         assert new_b in badges
         assert old_b not in badges
-
+        
     def test_update_workshop(self):
         update_ws = ep.UpdateWorkshops(Resource)
         old_ws = new_entity_name("workshopupdate")
