@@ -255,7 +255,11 @@ class EndpointTestCase(TestCase):
         #
         #     ret = get_badge_by_id.get(badgename)
         # assert type(ret) == dict
-        pass
+        badge_fields = {'badgename': ['badgetest']}
+        badgename = new_entity_name('badge')
+        response = ep.app.test_client().post(f'/badges/create/{badgename}', json=badge_fields)
+        ret = ep.app.test_client().get(f'/badges/list/{badgename}')
+        self.assertEqual(ret.status_code, 200)
 
     def test_get_user_by_id(self):
         """
