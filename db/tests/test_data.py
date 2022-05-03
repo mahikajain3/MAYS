@@ -1,9 +1,10 @@
 """
 This file holds the tests for data.py.
 """
+import sys
+sys.path.insert(0, "../..")
 
 from unittest import TestCase, skip
-
 import db.data as db
 import random
 
