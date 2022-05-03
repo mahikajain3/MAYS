@@ -7,7 +7,7 @@ from unittest import TestCase, skip
 import db.data as db
 import random
 
-HUGE_NUM = 10000000000000
+HUGE_NUM = 1000000000000
 
 
 def new_entity_name(entity_type):
