@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MAYS_HOME: /home/runner/work/MAYS/MAYS
+      PYTHONPATH: /home/runner/work/MAYS/MAYS
       MONGO_PASSWD: ${{secrets.MONGO_PASSWD}}
     steps:
       - uses: actions/checkout@v2
