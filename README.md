@@ -5,7 +5,7 @@ For more information, check out https://makerspace.engineering.nyu.edu/digital-b
 
 ## Requirements
 
-- Create and delete user
+- Create and delete user : DONE
 - Update user information
 - Store student information in a database (First name, Last name, netID, barcode)
 - List badges for users
