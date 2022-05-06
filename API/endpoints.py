@@ -72,7 +72,6 @@ class Login(Resource):
         else:
             raise (wz.NotFound("Wrong username.\
                 Please try again."))
-        
         """
 
         """ if (username != 'admin' or
