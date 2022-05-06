@@ -212,14 +212,13 @@ class EndpointTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_update_badge(self):
-        # badge_fields = {'trainingname': ['trainingtest']}
-        # old_badge_nm = new_entity_name('badge')
-        # new_badge_nm = new_entity_name('badge')
-        # new_d = ''
-        # test = ep.app.test_client().post(f'/badges/create/{old_badge_nm}', json=badge_fields)
-        # response = ep.app.test_client().put(f'/badges/update/{old_badge_nm}/{new_badge_nm}/{new_d}')
-        # self.assertEqual(response.status_code, 200)
-        pass
+        badge_fields = {'trainingname': ['trainingtest']}
+        old_badge_nm = new_entity_name('badge')
+        new_badge_nm = new_entity_name('badge')
+        new_d = ''
+        test = ep.app.test_client().post(f'/badges/create/{old_badge_nm}', json=badge_fields)
+        response = ep.app.test_client().put(f'/badges/update/{old_badge_nm}/{new_badge_nm}/{new_d}')
+        self.assertEqual(response.status_code, 200)
 
     def test_update_badge_desc(self):
         # badge_fields = {'trainingname': ['trainingtest']}
