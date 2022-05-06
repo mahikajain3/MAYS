@@ -8,7 +8,7 @@ For more information, check out https://makerspace.engineering.nyu.edu/digital-b
 - Create and delete user : DONE
 - Update user information
 - Store student information in a database (First name, Last name, netID, barcode)
-- List badges for users
+- List badges for users : DONE
 - List workshops 
 - List trainings 
 - Create association between workshops and trainings with each badge
