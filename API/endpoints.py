@@ -59,6 +59,22 @@ class Login(Resource):
             raise (wz.NotFound("Wrong username.\
                 Please try again."))
 
+        """
+        # hashed version of password verification
+        if db.netid_exists(username):
+            salt = utils.gen_salt()
+            hashed = utils.hash_pw(salt,password)
+            if hashed != db.get_password(username):
+                raise (wz.NotFound("Wrong password.\
+                    Please try again."))
+            else:
+                return "success."
+        else:
+            raise (wz.NotFound("Wrong username.\
+                Please try again."))
+        
+        """
+
         """ if (username != 'admin' or
                 password != 'admin'):
             raise (wz.NotFound("Wrong username or password.\
