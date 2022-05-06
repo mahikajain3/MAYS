@@ -19,7 +19,7 @@ def new_entity_name(entity_type):
     Randomly create entity name for test
     """
     int_name = random.randint(0, HUGE_NUM)
-    return f"new {entity_type}" + str(int_name)
+    return f"new{entity_type}" + str(int_name)
 
 
 class EndpointTestCase(TestCase):
@@ -170,9 +170,9 @@ class EndpointTestCase(TestCase):
 
     def test_delete_user(self):
         user_fields = {'firstname': ['firstname_test']}
-        netid = new_entity_name('abc')
-        test = ep.app.test_client().post(f'/users/create/{netid}', json=user_fields)
-        response = ep.app.test_client().delete(f'/users/delete/{netid}', json=user_fields)
+        temp_netid = new_entity_name('abc')
+        netid = db.add_user(temp_netid, "Mahika", "Jain", "9999999999")
+        response = ep.app.test_client().delete(f'/users/delete/{temp_netid}', json=user_fields)
         self.assertEqual(response.status_code, 200)
     
     def test_delete_training(self):
@@ -207,7 +207,7 @@ class EndpointTestCase(TestCase):
         user_fields = {'firstname': ['firstname_test']}
         old_netid = new_entity_name('abc')
         new_netid = new_entity_name('abc')
-        test = ep.app.test_client().post(f'/users/create/{old_netid}', json=user_fields)
+        netid = db.add_user(old_netid, "Mahika", "Jain", "99999999")
         response = ep.app.test_client().put(f'/users/update/{old_netid}/{new_netid}')
         self.assertEqual(response.status_code, 200)
 
@@ -215,20 +215,10 @@ class EndpointTestCase(TestCase):
         badge_fields = {'trainingname': ['trainingtest']}
         old_badge_nm = new_entity_name('badge')
         new_badge_nm = new_entity_name('badge')
-        new_d = ''
-        test = ep.app.test_client().post(f'/badges/create/{old_badge_nm}', json=badge_fields)
+        new_d = new_entity_name('desc')
+        badge = db.add_badge(old_badge_nm, "")
         response = ep.app.test_client().put(f'/badges/update/{old_badge_nm}/{new_badge_nm}/{new_d}')
         self.assertEqual(response.status_code, 200)
-
-    def test_update_badge_desc(self):
-        # badge_fields = {'trainingname': ['trainingtest']}
-        # old_badge_nm = new_entity_name('badge')
-        # new_badge_nm = new_entity_name('badge')
-        # new_d = new_entity_name('desc')
-        # test = ep.app.test_client().post(f'/badges/create/{old_badge_nm}', json=badge_fields)
-        # response = ep.app.test_client().put(f'/badges/update/{old_badge_nm}/{new_badge_nm}/{new_d}')
-        # self.assertEqual(response.status_code, 200)
-        pass
         
     def test_update_workshop(self):
         update_ws = ep.UpdateWorkshops(Resource)

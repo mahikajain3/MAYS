@@ -290,7 +290,7 @@ class GetBadgesByID(Resource):
 # type=str, help='new_workshopname')
 
 
-@ns_badge.route('/update/<oldbadgename>/<newbadgename>/<newdescription>')
+@ns_badge.route('/update/<old_badgename>/<new_badgename>/<desc>')
 class UpdateBadges(Resource):
     """
     This endpoint allows the user to update a badge name.
@@ -314,8 +314,7 @@ class UpdateBadges(Resource):
             raise (wz.NotAcceptable("Badge name already exists."))
         elif len(desc) != 0:
             db.update_badge_desc(new_badgename, desc)
-        else:
-            return f"{old_badgename} updated to {new_badgename}."
+        return f"{old_badgename} updated to {new_badgename}."
 
 
 @ns_badge.route('/delete/<badgename>')
