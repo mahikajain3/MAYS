@@ -5,13 +5,13 @@ The endpoint called `endpoints` will return all available endpoints.
 
 from http import HTTPStatus
 from flask import Flask
-from flask_cors import CORS
-from flask_restx import Resource, Api, reqparse
+# from flask_cors import CORS
+from flask_restx import Resource, Api
 import werkzeug.exceptions as wz
 import db.data as db
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 api = Api(app)
 
 ns_user = api.namespace('users', description='user related endpoints')
@@ -101,29 +101,29 @@ class ListUsers(Resource):
             return users
 
 
-user_parser = reqparse.RequestParser()
-user_parser.add_argument('firstname')
-user_parser.add_argument('lastname')
-user_parser.add_argument('barcode')
+# user_parser = reqparse.RequestParser()
+# user_parser.add_argument('firstname')
+# user_parser.add_argument('lastname')
+# user_parser.add_argument('barcode')
 
 
-@ns_user.route('/create/<netid>')
+@ns_user.route('/create/<netid>/<firstname>/<lastname>/<barcode>')
 class CreateUser(Resource):
     """
     This endpoint adds a new user to the list of all the users.
     """
-    @api.doc(parser=user_parser)
+    # @api.doc(parser=user_parser)
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def post(self, netid):
+    def post(self, netid, firstname, lastname, barcode):
         """
         This method adds a new user to the list of all users.
         """
-        args = user_parser.parse_args()
-        firstname = args['firstname']
-        lastname = args['lastname']
-        barcode = args['barcode']
+        # args = user_parser.parse_args()
+        # firstname = args['firstname']
+        # lastname = args['lastname']
+        # barcode = args['barcode']
         ret = db.add_user(netid, firstname, lastname, barcode)
         # ret = db.add_user2(netid, firstname, lastname, password, barcode)
         if ret == db.NOT_FOUND:
@@ -195,13 +195,13 @@ class DeleteUser(Resource):
             return f"{username} deleted."
 
 
-badge_parser = reqparse.RequestParser()
-badge_parser.add_argument('description')
-badge_parser.add_argument('trainingname', action='split')
-badge_parser.add_argument('workshopname', action='split')
+# badge_parser = reqparse.RequestParser()
+# badge_parser.add_argument('description')
+# badge_parser.add_argument('trainingname', action='split')
+# badge_parser.add_argument('workshopname', action='split')
 
 
-@ns_badge.route('/create/<badgename>')
+@ns_badge.route('/create/<badgename>/<traininglist>/<workshoplist>/<desc>')
 class CreateBadges(Resource):
     """
     This endpoint adds:
@@ -211,20 +211,19 @@ class CreateBadges(Resource):
     trainings to the list of all the trainings
     (if it doesn't already exist)
     """
-    @api.doc(parser=badge_parser)
+    # @api.doc(parser=badge_parser)
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'A duplicate key')
-    def post(self, badgename):
+    def post(self, badgename, traininglist, workshoplist, desc):
         """
         This method adds a new badge to the list of all badges.
-        It has the option to add trainings, workshops as well.
-        Need to add descriptions. !!!!!
+        It has the option to add trainings, workshops and description.
         """
-        args = badge_parser.parse_args()
-        desc = args["description"]
-        traininglist = args["trainingname"]
-        workshoplist = args["workshopname"]
+        # args = badge_parser.parse_args()
+        # desc = args["description"]
+        # traininglist = args["trainingname"]
+        # workshoplist = args["workshopname"]
         ret = db.add_badge(badgename, desc)
 
         if workshoplist:
