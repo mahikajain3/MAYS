@@ -59,7 +59,6 @@ class EndpointTestCase(TestCase):
         desc = new_entity_name('desc')
         # badge = db.add_badge(badge_nm, "")
         response = ep.app.test_client().post(f'/badges/create/{badge_nm}/{traininglist}/{workshoplist}/{desc}')
-        print(response)
         self.assertEqual(response.status_code, 200)
         # pass
 
