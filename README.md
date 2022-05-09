@@ -4,7 +4,7 @@ The MakerSpace offers a number of trainings and their Design Lab hosts a variety
 For more information, check out https://makerspace.engineering.nyu.edu/digital-badges/.
 
 ## Requirements
-### Realized features:
+### Realized Features:
 - Create and delete user 
 - Update user information 
 - Store student information in a database (First name, Last name, netID, barcode)
@@ -12,12 +12,12 @@ For more information, check out https://makerspace.engineering.nyu.edu/digital-b
 - List workshops 
 - List trainings 
 - Create association between workshops and trainings with each badge
-### In Progress:
+### In Progress Features:
 - Get number of trainings/workshops attendance required per badge
 - Create and get record of what trainings/workshops student has completed
 - Create and get record of how many more attendances are needed to earn a specific badge
 - Record and notify student when a badge earned
--
+
 ## Installation
 - Git clone the repository
 - Run make prod
