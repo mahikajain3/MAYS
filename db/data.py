@@ -227,7 +227,7 @@ def add_badge(badgename, desc):
     if badge_exists(badgename):
         return DUPLICATE
     else:
-        dbc.insert_doc(BADGES, {BADGES_NM: badgename}, {DESC: desc})
+        dbc.insert_doc(BADGES, {BADGES_NM: badgename, DESC: desc})
 
 
 def add_training(trainingname):
